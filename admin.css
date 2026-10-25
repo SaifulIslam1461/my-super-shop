@@ -5,15 +5,15 @@ body {
     background-color: #f3f4f6;
 }
 
-.leather-900 { background-color: #1a0f0a; }
-.leather-800 { background-color: #381b07; }
-.gold-400 { color: #f3e5ab; }
-.gold-500 { color: #d4af37; }
+.bg-leather-900 { background-color: #1a0f0a; }
+.bg-leather-800 { background-color: #381b07; }
+.text-gold-400 { color: #f3e5ab; }
+.text-gold-500 { color: #d4af37; }
 
-/* Custom Scrollbar */
+/* Custom Mobile Scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 }
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
