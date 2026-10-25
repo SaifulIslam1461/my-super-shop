@@ -132,6 +132,14 @@ async function loadDashboardData() {
             if(document.getElementById('contentAnnouncement')) document.getElementById('contentAnnouncement').value = setObj.announcement || '';
             if(document.getElementById('contentBrandName')) document.getElementById('contentBrandName').value = setObj.brand_name || '';
             if(document.getElementById('contentPhone')) document.getElementById('contentPhone').value = setObj.phone || '';
+
+            // Settings tab inputs
+            if(document.getElementById('settingBrand')) document.getElementById('settingBrand').value = setObj.brand_name || '';
+            if(document.getElementById('settingPhone')) document.getElementById('settingPhone').value = setObj.phone || '';
+            if(document.getElementById('settingWhatsapp')) document.getElementById('settingWhatsapp').value = setObj.whatsapp || '';
+            if(document.getElementById('settingFacebook')) document.getElementById('settingFacebook').value = setObj.facebook || '';
+            if(document.getElementById('settingYoutube')) document.getElementById('settingYoutube').value = setObj.youtube || '';
+            if(document.getElementById('settingLocation')) document.getElementById('settingLocation').value = setObj.location || '';
         }
     } catch {}
 
@@ -213,7 +221,6 @@ async function addNewCategory() {
         nameInput.value = '';
         loadDashboardData();
     } catch (err) {
-        // Fallback local addition if table is missing
         adminCategories.push({ id: Date.now(), name, slug });
         nameInput.value = '';
         renderCategoriesManagement();
@@ -243,6 +250,35 @@ function populateCategoryDropdowns() {
     }
 }
 
+// Save Settings Function (Handles Brand, Phone, WhatsApp, Facebook, YouTube, Location)
+async function saveSettings(e) {
+    e.preventDefault();
+    const brand_name = document.getElementById('settingBrand').value;
+    const phone = document.getElementById('settingPhone').value;
+    const whatsapp = document.getElementById('settingWhatsapp').value;
+    const facebook = document.getElementById('settingFacebook').value;
+    const youtube = document.getElementById('settingYoutube').value;
+    const location = document.getElementById('settingLocation').value;
+
+    const settings = [
+        { key: 'brand_name', value: brand_name },
+        { key: 'phone', value: phone },
+        { key: 'whatsapp', value: whatsapp },
+        { key: 'facebook', value: facebook },
+        { key: 'youtube', value: youtube },
+        { key: 'location', value: location }
+    ];
+
+    try {
+        for(let s of settings) {
+            await supabaseClient.from('store_settings').upsert({ key: s.key, value: s.value }, { onConflict: 'key' });
+        }
+        alert('সেটিংস সফলভাবে সংরক্ষিত হয়েছে!');
+    } catch (err) {
+        alert('সেটিংস সেভ করতে সমস্যা হয়েছে: ' + err.message);
+    }
+}
+
 // Website Content Update Function
 async function saveWebsiteContent(e) {
     e.preventDefault();
@@ -262,7 +298,7 @@ async function saveWebsiteContent(e) {
         }
         alert('ওয়েবসাইট কনটেন্ট সফলভাবে আপডেট করা হয়েছে!');
     } catch (err) {
-        alert('সেভ হয়েছে কিন্তু ডাটাবেস আপডেট চেক করুন: ' + err.message);
+        alert('সেভ করতে সমস্যা হয়েছে: ' + err.message);
     }
 }
 
