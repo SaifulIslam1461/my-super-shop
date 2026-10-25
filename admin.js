@@ -10,6 +10,13 @@ window.onload = async function() {
     }
 };
 
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+}
+
 async function handleAdminLogin(e) {
     e.preventDefault();
     const email = document.getElementById('adminEmail').value;
@@ -41,14 +48,18 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('bg-leather-800', 'text-gold-400'));
     
     document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-    event.currentTarget.classList.add('bg-leather-800', 'text-gold-400');
+    
+    // Close sidebar on mobile after click
+    const sidebar = document.getElementById('adminSidebar');
+    if (!sidebar.classList.contains('-translate-x-full')) {
+        toggleMobileSidebar();
+    }
     
     const titles = {
         'dashboard': 'ড্যাশবোর্ড ওভারভিউ',
         'products': 'পণ্য ব্যবস্থাপনা',
         'orders': 'অর্ডার ম্যানেজমেন্ট',
         'inventory': 'ইনভেন্টরি স্টক',
-        'coupons': 'কুপন ও ডিসকাউন্ট',
         'settings': 'ওয়েবসাইট সেটিংস'
     };
     document.getElementById('pageTitle').innerText = titles[tabName] || 'অ্যাডমিন প্যানেল';
@@ -81,16 +92,16 @@ function renderAdminProducts() {
     const tbody = document.getElementById('adminProductTableBody');
     tbody.innerHTML = adminProducts.map(p => `
         <tr class="border-b hover:bg-gray-50">
-            <td class="p-4 flex items-center gap-3">
-                <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border">
-                <span class="font-bold text-gray-900 text-xs">${p.name}</span>
+            <td class="p-3 flex items-center gap-2">
+                <img src="${p.image}" class="w-8 h-8 object-cover rounded border shrink-0">
+                <span class="font-bold text-gray-900 truncate max-w-[120px] sm:max-w-none">${p.name}</span>
             </td>
-            <td class="p-4 text-xs font-semibold text-gray-600">${p.category}</td>
-            <td class="p-4 text-xs font-bold text-gray-900">৳${p.price}</td>
-            <td class="p-4 text-xs font-bold ${p.stock <= 5 ? 'text-red-600' : 'text-emerald-600'}">${p.stock} টি</td>
-            <td class="p-4 text-right space-x-2">
-                <button onclick="editProduct(${p.id})" class="text-blue-600 hover:text-blue-800 text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
-                <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+            <td class="p-3 font-semibold text-gray-600">${p.category}</td>
+            <td class="p-3 font-bold text-gray-900">৳${p.price}</td>
+            <td class="p-3 font-bold ${p.stock <= 5 ? 'text-red-600' : 'text-emerald-600'}">${p.stock} টি</td>
+            <td class="p-3 text-right space-x-1">
+                <button onclick="editProduct(${p.id})" class="text-blue-600 hover:text-blue-800 p-1"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-800 p-1"><i class="fa-solid fa-trash"></i></button>
             </td>
         </tr>
     `).join('');
@@ -100,14 +111,14 @@ function renderAdminOrders() {
     const tbody = document.getElementById('adminOrderTableBody');
     tbody.innerHTML = adminOrders.map(o => `
         <tr class="border-b hover:bg-gray-50">
-            <td class="p-4 font-bold text-xs text-leather-900">#${o.order_id}</td>
-            <td class="p-4 text-xs">
+            <td class="p-3 font-bold text-leather-900">#${o.order_id}</td>
+            <td class="p-3">
                 <p class="font-bold text-gray-900">${o.customer_name}</p>
-                <p class="text-gray-500">${o.customer_phone}</p>
+                <p class="text-gray-500 text-[11px]">${o.customer_phone}</p>
             </td>
-            <td class="p-4 text-xs font-black text-gray-900">৳${o.grand_total}</td>
-            <td class="p-4 text-xs">
-                <select onchange="updateOrderStatus('${o.order_id}', this.value)" class="border rounded p-1.5 text-xs font-bold bg-white">
+            <td class="p-3 font-black text-gray-900">৳${o.grand_total}</td>
+            <td class="p-3">
+                <select onchange="updateOrderStatus('${o.order_id}', this.value)" class="border rounded p-1 text-[11px] font-bold bg-white">
                     <option value="Pending" ${o.status==='Pending'?'selected':''}>Pending</option>
                     <option value="Confirmed" ${o.status==='Confirmed'?'selected':''}>Confirmed</option>
                     <option value="Shipped" ${o.status==='Shipped'?'selected':''}>Shipped</option>
@@ -115,8 +126,8 @@ function renderAdminOrders() {
                     <option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
                 </select>
             </td>
-            <td class="p-4 text-right">
-                <a href="https://wa.me/88${o.customer_phone}" target="_blank" class="bg-green-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <td class="p-3 text-right">
+                <a href="https://wa.me/88${o.customer_phone}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded text-[11px] font-bold"><i class="fa-brands fa-whatsapp"></i> Chat</a>
             </td>
         </tr>
     `).join('');
@@ -126,11 +137,11 @@ function renderAdminInventory() {
     const tbody = document.getElementById('adminInventoryTableBody');
     tbody.innerHTML = adminProducts.map(p => `
         <tr class="border-b hover:bg-gray-50">
-            <td class="p-4 font-bold text-xs text-gray-900">${p.name}</td>
-            <td class="p-4 text-xs font-bold">${p.stock} টি</td>
-            <td class="p-4 text-xs"><span class="px-2 py-1 rounded font-bold ${p.stock <= 5 ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">${p.stock <= 5 ? 'Low Stock' : 'In Stock'}</span></td>
-            <td class="p-4 text-right">
-                <button onclick="adjustStock(${p.id}, 5)" class="bg-gray-200 hover:bg-gray-300 text-xs font-bold px-2.5 py-1 rounded">+৫ স্টক</button>
+            <td class="p-3 font-bold text-gray-900 truncate max-w-[130px] sm:max-w-none">${p.name}</td>
+            <td class="p-3 font-bold">${p.stock} টি</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.stock <= 5 ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">${p.stock <= 5 ? 'Low Stock' : 'In Stock'}</span></td>
+            <td class="p-3 text-right">
+                <button onclick="adjustStock(${p.id}, 5)" class="bg-gray-200 hover:bg-gray-300 text-[10px] font-bold px-2 py-1 rounded">+৫</button>
             </td>
         </tr>
     `).join('');
