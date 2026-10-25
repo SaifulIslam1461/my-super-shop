@@ -1,7 +1,7 @@
-// Extended Admin Panel Controller Logic with Multi-Image Upload & Analytics
 let adminProducts = [];
 let adminOrders = [];
 let adminExpenses = [];
+let adminCategories = [];
 let salesChartInstance = null;
 let uploadedImagesArray = [];
 
@@ -74,7 +74,7 @@ function switchTab(tabName) {
         'courier': 'কুরিয়ার ও শিপিং',
         'expenses': 'খরচ রেজিস্টার',
         'reports': 'সেলস রিপোর্টস',
-        'content': 'ওয়েবসাইট কনটেন্ট',
+        'content': 'ওয়েবসাইট কনটেন্ট আপডেট',
         'notifications': 'নোটিফিকেশন',
         'seo': 'SEO সেটিংস',
         'permissions': 'অ্যাডমিন পারমিশন',
@@ -85,21 +85,55 @@ function switchTab(tabName) {
 }
 
 async function loadDashboardData() {
-    // 1. Fetch Products
+    // 1. Fetch Categories
+    try {
+        const { data: cats } = await supabaseClient.from('categories').select('*');
+        adminCategories = cats && cats.length > 0 ? cats : [
+            { id: 1, name: 'Short Wallet', slug: 'short-wallet' },
+            { id: 2, name: 'Long Wallet', slug: 'long-wallet' },
+            { id: 3, name: 'Card Holder', slug: 'card-holder' },
+            { id: 4, name: 'Shoes', slug: 'shoes' },
+            { id: 5, name: 'Accessories', slug: 'accessories' }
+        ];
+    } catch {
+        adminCategories = [
+            { id: 1, name: 'Short Wallet', slug: 'short-wallet' },
+            { id: 2, name: 'Long Wallet', slug: 'long-wallet' },
+            { id: 3, name: 'Card Holder', slug: 'card-holder' },
+            { id: 4, name: 'Shoes', slug: 'shoes' },
+            { id: 5, name: 'Accessories', slug: 'accessories' }
+        ];
+    }
+    renderCategoriesManagement();
+    populateCategoryDropdowns();
+
+    // 2. Fetch Products
     const { data: prods } = await supabaseClient.from('products').select('*');
     adminProducts = prods || [];
 
-    // 2. Fetch Orders
+    // 3. Fetch Orders
     const { data: ords } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
     adminOrders = ords || [];
 
-    // 3. Fetch Expenses
+    // 4. Fetch Expenses
     try {
         const { data: exps } = await supabaseClient.from('expenses').select('*').order('created_at', { ascending: false });
         adminExpenses = exps || [];
     } catch {
         adminExpenses = [];
     }
+
+    // 5. Fetch Settings / Content
+    try {
+        const { data: sets } = await supabaseClient.from('store_settings').select('*');
+        if(sets) {
+            const setObj = {};
+            sets.forEach(s => setObj[s.key] = s.value);
+            if(document.getElementById('contentAnnouncement')) document.getElementById('contentAnnouncement').value = setObj.announcement || '';
+            if(document.getElementById('contentBrandName')) document.getElementById('contentBrandName').value = setObj.brand_name || '';
+            if(document.getElementById('contentPhone')) document.getElementById('contentPhone').value = setObj.phone || '';
+        }
+    } catch {}
 
     // Calculations
     const todayStr = new Date().toISOString().split('T')[0];
@@ -141,8 +175,95 @@ async function loadDashboardData() {
     renderLowStockTable();
     renderCustomersTable();
     renderExpensesTable();
-    renderCategories();
     renderSalesAnalyticsChart();
+}
+
+// Category Management Functions
+function renderCategoriesManagement() {
+    const container = document.getElementById('categoryListContainer');
+    if(!container) return;
+    container.innerHTML = adminCategories.map(c => `
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-xl border text-xs">
+            <div>
+                <span class="font-bold text-gray-800 text-sm">${c.name}</span>
+                <p class="text-[10px] text-gray-500">Slug: ${c.slug}</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">সক্রিয়</span>
+                <button onclick="deleteCategory(${c.id})" class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white w-7 h-7 rounded-lg flex items-center justify-center transition" title="ডিলিট করুন">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function addNewCategory() {
+    const nameInput = document.getElementById('newCategoryName');
+    const name = nameInput.value.trim();
+    if(!name) {
+        alert('দয়া করে ক্যাটাগরির নাম লিখুন!');
+        return;
+    }
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    try {
+        const { error } = await supabaseClient.from('categories').insert([{ name, slug }]);
+        if(error) throw error;
+        nameInput.value = '';
+        loadDashboardData();
+    } catch (err) {
+        // Fallback local addition if table is missing
+        adminCategories.push({ id: Date.now(), name, slug });
+        nameInput.value = '';
+        renderCategoriesManagement();
+        populateCategoryDropdowns();
+    }
+}
+
+async function deleteCategory(id) {
+    if(confirm('এই ক্যাটাগরি ডিলিট করতে চান?')) {
+        try {
+            await supabaseClient.from('categories').delete().eq('id', id);
+        } catch {}
+        adminCategories = adminCategories.filter(c => c.id !== id);
+        renderCategoriesManagement();
+        populateCategoryDropdowns();
+    }
+}
+
+function populateCategoryDropdowns() {
+    const select = document.getElementById('prodCategory');
+    const filterSelect = document.getElementById('prodCatFilter');
+    if(select) {
+        select.innerHTML = adminCategories.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
+    }
+    if(filterSelect) {
+        filterSelect.innerHTML = `<option value="all">সকল ক্যাটাগরি</option>` + adminCategories.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
+    }
+}
+
+// Website Content Update Function
+async function saveWebsiteContent(e) {
+    e.preventDefault();
+    const announcement = document.getElementById('contentAnnouncement').value;
+    const brand_name = document.getElementById('contentBrandName').value;
+    const phone = document.getElementById('contentPhone').value;
+
+    const settings = [
+        { key: 'announcement', value: announcement },
+        { key: 'brand_name', value: brand_name },
+        { key: 'phone', value: phone }
+    ];
+
+    try {
+        for(let s of settings) {
+            await supabaseClient.from('store_settings').upsert({ key: s.key, value: s.value }, { onConflict: 'key' });
+        }
+        alert('ওয়েবসাইট কনটেন্ট সফলভাবে আপডেট করা হয়েছে!');
+    } catch (err) {
+        alert('সেভ হয়েছে কিন্তু ডাটাবেস আপডেট চেক করুন: ' + err.message);
+    }
 }
 
 function renderRecentOrders() {
@@ -318,18 +439,6 @@ function renderExpensesTable() {
     `).join('');
 }
 
-function renderCategories() {
-    const container = document.getElementById('categoryListContainer');
-    if(!container) return;
-    const cats = ['Short Wallet', 'Long Wallet', 'Card Holder', 'Shoes', 'Accessories'];
-    container.innerHTML = cats.map(c => `
-        <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-xl border text-xs">
-            <span class="font-bold text-gray-800">${c}</span>
-            <span class="bg-gold-500 text-leather-900 px-2 py-0.5 rounded font-extrabold text-[10px]">সক্রিয়</span>
-        </div>
-    `).join('');
-}
-
 function exportOrdersCSV() {
     let csvContent = "data:text/csv;charset=utf-8,Order ID,Name,Phone,Amount,Status\n";
     adminOrders.forEach(o => {
@@ -356,7 +465,6 @@ async function adjustStock(productId, amount) {
     loadDashboardData();
 }
 
-// Local File Upload Handler for Multiple Images
 function handleImageSelection(e) {
     const files = e.target.files;
     uploadedImagesArray = [];
