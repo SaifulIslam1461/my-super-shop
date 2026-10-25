@@ -123,7 +123,7 @@ async function loadDashboardData() {
         adminExpenses = [];
     }
 
-    // 5. Fetch Settings / Content
+    // 5. Fetch Settings / Content & Auto-sync global links
     try {
         const { data: sets } = await supabaseClient.from('store_settings').select('*');
         if(sets) {
@@ -133,7 +133,6 @@ async function loadDashboardData() {
             if(document.getElementById('contentBrandName')) document.getElementById('contentBrandName').value = setObj.brand_name || '';
             if(document.getElementById('contentPhone')) document.getElementById('contentPhone').value = setObj.phone || '';
 
-            // Settings tab inputs
             if(document.getElementById('settingBrand')) document.getElementById('settingBrand').value = setObj.brand_name || '';
             if(document.getElementById('settingPhone')) document.getElementById('settingPhone').value = setObj.phone || '';
             if(document.getElementById('settingWhatsapp')) document.getElementById('settingWhatsapp').value = setObj.whatsapp || '';
@@ -186,7 +185,6 @@ async function loadDashboardData() {
     renderSalesAnalyticsChart();
 }
 
-// Category Management Functions
 function renderCategoriesManagement() {
     const container = document.getElementById('categoryListContainer');
     if(!container) return;
@@ -250,7 +248,7 @@ function populateCategoryDropdowns() {
     }
 }
 
-// Save Settings Function (Handles Brand, Phone, WhatsApp, Facebook, YouTube, Location)
+// Save Settings Function (Handles WhatsApp, Facebook, YouTube, Location properly for website sync)
 async function saveSettings(e) {
     e.preventDefault();
     const brand_name = document.getElementById('settingBrand').value;
@@ -273,13 +271,12 @@ async function saveSettings(e) {
         for(let s of settings) {
             await supabaseClient.from('store_settings').upsert({ key: s.key, value: s.value }, { onConflict: 'key' });
         }
-        alert('সেটিংস সফলভাবে সংরক্ষিত হয়েছে!');
+        alert('সেটিংস ও সোশ্যাল লিংক সফলভাবে সংরক্ষিত হয়েছে!');
     } catch (err) {
         alert('সেটিংস সেভ করতে সমস্যা হয়েছে: ' + err.message);
     }
 }
 
-// Website Content Update Function
 async function saveWebsiteContent(e) {
     e.preventDefault();
     const announcement = document.getElementById('contentAnnouncement').value;
@@ -533,6 +530,7 @@ function openProductModal() {
     document.getElementById('productForm').reset();
     document.getElementById('editProductId').value = '';
     document.getElementById('imagePreviewContainer').innerHTML = '';
+    document.getElementById('prodVideoUrl').value = '';
     uploadedImagesArray = [];
     document.getElementById('productModalTitle').innerText = 'নতুন পণ্য যোগ করুন';
     document.getElementById('productModal').classList.remove('hidden');
@@ -552,13 +550,14 @@ async function saveProduct(e) {
     const original_price = parseFloat(document.getElementById('prodOrigPrice').value);
     const stock = parseInt(document.getElementById('prodStock').value);
     let image = document.getElementById('prodImage').value;
+    const video_url = document.getElementById('prodVideoUrl').value;
     const description = document.getElementById('prodDesc').value;
 
     if(uploadedImagesArray.length > 0) {
         image = uploadedImagesArray[0];
     }
 
-    const payload = { name, category, price, original_price, stock, image, description };
+    const payload = { name, category, price, original_price, stock, image, video_url, description };
 
     if(id) {
         await supabaseClient.from('products').update(payload).eq('id', id);
@@ -602,6 +601,7 @@ function editProduct(id) {
     document.getElementById('prodOrigPrice').value = p.original_price;
     document.getElementById('prodStock').value = p.stock;
     document.getElementById('prodImage').value = p.image;
+    document.getElementById('prodVideoUrl').value = p.video_url || '';
     document.getElementById('prodDesc').value = p.description || '';
     
     uploadedImagesArray = [];
