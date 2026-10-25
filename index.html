@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         tailwind.config = {
@@ -85,11 +87,11 @@
             <span><i class="fa-solid fa-shield-halved text-gold-500 mr-1"></i> ১০০% অরিজিনাল লেদার গ্যারান্টি</span>
             <span><i class="fa-solid fa-truck-fast text-gold-500 mr-1"></i> ক্যাশ অন ডেলিভারি</span>
         </div>
-        <div class="w-full sm:w-auto text-center font-semibold tracking-wide">
+        <div id="announcementText" class="w-full sm:w-auto text-center font-semibold tracking-wide">
             🔥 সারাদেশ জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+ | সারাদেশে ক্যাশ অন ডেলিভারি এভেলেবল!
         </div>
         <div class="hidden sm:flex items-center gap-3 text-xs">
-            <a href="tel:+8801700000000" class="hover:text-gold-500 transition"><i class="fa-solid fa-phone mr-1"></i> 01700-000000</a>
+            <a id="headerPhone" href="tel:+8801700000000" class="hover:text-gold-500 transition"><i class="fa-solid fa-phone mr-1"></i> 01700-000000</a>
         </div>
     </div>
 
@@ -106,7 +108,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-2xl font-black tracking-widest text-white group-hover:text-gold-400 transition">ROVIX<span class="text-gold-500">™</span></span>
+                        <span id="brandName" class="text-2xl font-black tracking-widest text-white group-hover:text-gold-400 transition">ROVIX<span class="text-gold-500">™</span></span>
                         <span class="text-[9px] uppercase tracking-[0.25em] text-amber-200/70 -mt-1 font-sans">Leather Crafts</span>
                     </div>
                 </a>
@@ -432,7 +434,7 @@
             </div>
         </section>
 
-        <!-- Product Showcase Section -->
+        <!-- Product Showcase Section (Dynamic from Supabase) -->
         <section id="products-section" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row items-center justify-between border-b border-leather-200 pb-5 mb-8 gap-4">
                 <div>
@@ -452,7 +454,7 @@
 
             <!-- Product Grid -->
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Dynamically Populated via JS -->
+                <!-- Populated via Supabase JS -->
             </div>
         </section>
 
@@ -529,12 +531,10 @@
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (ঢাকা)</p>
                                     </div>
                                 </div>
-                                <div class="text-gold-500 text-xs">
-                                    ★★★★★
-                                </div>
+                                <div class="text-gold-500 text-xs">★★★★★</div>
                             </div>
                             <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
-                                "ওয়ালেটটির চামড়া আস আসলেই অরিজিনাল। আগুন দিয়ে একটু টেস্ট করেছিলাম, বিন্দুমাত্র কোন ক্ষতি হয়নি। সেলাই ফিনিশিং অনেক সুন্দর।"
+                                "ওয়ালেটটির চামড়া আসলেই অরিজিনাল। আগুন দিয়ে একটু টেস্ট করেছিলাম, বিন্দুমাত্র কোন ক্ষতি হয়নি। সেলাই ফিনিশিং অনেক সুন্দর।"
                             </p>
                         </div>
                         <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
@@ -555,9 +555,7 @@
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (চট্টগ্রাম)</p>
                                     </div>
                                 </div>
-                                <div class="text-gold-500 text-xs">
-                                    ★★★★★
-                                </div>
+                                <div class="text-gold-500 text-xs">★★★★★</div>
                             </div>
                             <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
                                 "মাত্র ২ দিনে ডেলিভারি পেয়েছি। বাক্সের প্যাকিং এবং ফ্রি গিফট মেটালের কি-রিং টা দারুণ ছিল। ধন্যবাদ রোভিক্স!"
@@ -581,9 +579,7 @@
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (সিলেট)</p>
                                     </div>
                                 </div>
-                                <div class="text-gold-500 text-xs">
-                                    ★★★★★
-                                </div>
+                                <div class="text-gold-500 text-xs">★★★★★</div>
                             </div>
                             <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
                                 "জুতার ফিনিশিং প্রিমিয়াম। পায়ে পরে অনেক আরামদায়ক। ইনসোল অনেক সফট। অফিস ব্যবহারের জন্য এক কথায় সেরা।"
@@ -599,7 +595,7 @@
             </div>
         </section>
 
-        <!-- International Press & Ticker Ticker Section -->
+        <!-- International Press & Ticker Section -->
         <section class="bg-leather-900 text-amber-200 py-6 overflow-hidden border-t border-b border-gold-500/20">
             <div class="max-w-7xl mx-auto px-4 text-center mb-3">
                 <span class="text-[11px] uppercase tracking-widest text-gold-400 font-bold">মিডিয়া ফোকাস ও আন্তর্জাতিক স্বীকৃতি</span>
@@ -918,122 +914,43 @@
 
     <!-- Sticky Floating Mobile Quick Actions Button -->
     <div class="fixed bottom-4 right-4 z-40 sm:hidden flex flex-col gap-2">
-        <a href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white">
+        <a id="whatsappBtn" href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
     </div>
 
-    <!-- JavaScript App Logic -->
+    <!-- JavaScript App Logic & Supabase Integration -->
+    <script src="products.js"></script>
     <script>
-        // Rovix Product Inventory Database
-        const products = [
-            {
-                id: 1,
-                name: "Rovix Vintage Executive Short Wallet",
-                category: "short-wallet",
-                price: 1450,
-                originalPrice: 2050,
-                rating: 4.9,
-                reviews: 128,
-                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
-                badge: "BEST SELLER",
-                desc: "১০০% প্রিমিয়াম কাউহাইড জেনুইন লেদার। ১২টি কার্ড স্লট, ২ টি ক্যাশ চেম্বার এবং ১টি জিওমেট্রিক কয়েন পকেট।"
-            },
-            {
-                id: 2,
-                name: "Samson Metal Chain Short Wallet Black",
-                category: "short-wallet",
-                price: 1290,
-                originalPrice: 1800,
-                rating: 4.8,
-                reviews: 95,
-                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80",
-                badge: "POPULAR",
-                desc: "অরিজিনাল লেদারের সাথে মেটালিক ডিটেইলিং। আধুনিক ট্রাভেলার ও মেটাল প্রেমীদের জন্য।"
-            },
-            {
-                id: 3,
-                name: "Executive Long Passport & Mobile Wallet",
-                category: "long-wallet",
-                price: 1850,
-                originalPrice: 2500,
-                rating: 4.9,
-                reviews: 210,
-                image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80",
-                badge: "PREMIUM",
-                desc: "মোবাইল ফোন, পাসপোর্ট, চেকবুক ও নগদ টাকা একসঙ্গে রাখার প্রিমিয়াম লং ওয়ালেট।"
-            },
-            {
-                id: 4,
-                name: "Minimalist Pop-Up Leather Card Holder",
-                category: "card-holder",
-                price: 850,
-                originalPrice: 1200,
-                rating: 4.7,
-                reviews: 84,
-                image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80",
-                badge: "NEW",
-                desc: "অ্যালুমিনিয়াম পপ-আপ কেস ও বাইরে চামড়ার ফিনিশিং। RFID ব্লক প্রযুক্তি সহ।"
-            },
-            {
-                id: 5,
-                name: "Rovix Handcrafted Formal Oxford Shoes",
-                category: "shoes",
-                price: 3450,
-                originalPrice: 4800,
-                rating: 5.0,
-                reviews: 67,
-                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
-                badge: "HOT DEAL",
-                desc: "সম্পূর্ণ হাতে সেলাই করা অরিজিনাল চামড়ার ফর্মাল জুতা। দীর্ঘস্থায়ী সোল ও আরামদায়ক ইনসোল।"
-            },
-            {
-                id: 6,
-                name: "Classic Italian Genuine Leather Belt",
-                category: "accessories",
-                price: 1150,
-                originalPrice: 1600,
-                rating: 4.8,
-                reviews: 142,
-                image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80",
-                badge: "BESTSELLER",
-                desc: "ইম্পোর্টেড মেটাল বাকল সহ ১০০% খাঁটি চামড়ার বেল্ট। ২ বছরের চামড়ার গ্যারান্টি।"
-            },
-            {
-                id: 7,
-                name: "Slim Bifold Tan Leather Wallet",
-                category: "short-wallet",
-                price: 1190,
-                originalPrice: 1650,
-                rating: 4.7,
-                reviews: 53,
-                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
-                badge: "POPULAR",
-                desc: "স্লিম ডিজাইনের হালকা ট্যান কালারের শর্ট ওয়ালেট। পকেটে ভারী অনুভুতি হয় না।"
-            },
-            {
-                id: 8,
-                name: "Handmade Loafer Shoes Brown",
-                category: "shoes",
-                price: 2950,
-                originalPrice: 3900,
-                rating: 4.9,
-                reviews: 88,
-                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
-                badge: "NEW",
-                desc: "ক্যাজুয়াল ও ফর্মাল উভয় ব্যবহারের উপযোগী পিওর লেদার লফার শু।"
-            }
-        ];
-
-        // Global State Variables
+        let products = [];
         let cart = [];
-        let wishlist = [];
+        let storeSettings = {};
 
         // App Initialization
-        window.onload = function() {
+        window.onload = async function() {
+            products = await fetchProductsFromDB();
+            storeSettings = await fetchSettingsFromDB();
+            applySettings();
             renderProducts(products);
             updateCartUI();
         };
+
+        // Apply Dynamic Settings from DB
+        function applySettings() {
+            if(storeSettings.brand_name) {
+                document.getElementById('brandName').innerHTML = storeSettings.brand_name.replace('™', '<span class="text-gold-500">™</span>');
+            }
+            if(storeSettings.announcement) {
+                document.getElementById('announcementText').innerText = storeSettings.announcement;
+            }
+            if(storeSettings.phone) {
+                document.getElementById('headerPhone').innerHTML = `<i class="fa-solid fa-phone mr-1"></i> ${storeSettings.phone}`;
+                document.getElementById('headerPhone').href = `tel:${storeSettings.phone}`;
+            }
+            if(storeSettings.whatsapp) {
+                document.getElementById('whatsappBtn').href = `https://wa.me/${storeSettings.whatsapp}`;
+            }
+        }
 
         // Render Product Grid
         function renderProducts(items) {
@@ -1061,8 +978,8 @@
                         <div>
                             <div class="flex items-center text-gold-500 text-xs gap-1 mb-1">
                                 <i class="fa-solid fa-star"></i>
-                                <span class="font-bold text-leather-900">${p.rating}</span>
-                                <span class="text-gray-400 font-normal">(${p.reviews})</span>
+                                <span class="font-bold text-leather-900">${p.rating || 4.9}</span>
+                                <span class="text-gray-400 font-normal">(${p.reviews || 50})</span>
                             </div>
                             <h3 class="font-bold text-sm text-leather-900 line-clamp-2 hover:text-gold-600 transition cursor-pointer" onclick="openQuickView(${p.id})">${p.name}</h3>
                         </div>
@@ -1070,7 +987,7 @@
                         <div>
                             <div class="flex items-baseline gap-2 mb-3">
                                 <span class="text-lg font-black text-leather-900">৳${p.price.toLocaleString()}</span>
-                                <span class="text-xs text-gray-400 line-through">৳${p.originalPrice.toLocaleString()}</span>
+                                <span class="text-xs text-gray-400 line-through">৳${(p.original_price || p.price + 500).toLocaleString()}</span>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2">
@@ -1157,7 +1074,6 @@
 
             document.getElementById('cartCountBadge').innerText = totalQty;
 
-            // Render Mini Cart Drawer
             const cartDrawerItems = document.getElementById('cartDrawerItems');
             if(cart.length === 0) {
                 cartDrawerItems.innerHTML = `
@@ -1232,27 +1148,59 @@
             document.getElementById('btnTotal').innerText = grandTotal.toLocaleString();
         }
 
-        function submitOrder(e) {
+        // Real Order Submission to Supabase
+        async function submitOrder(e) {
             e.preventDefault();
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
             const area = parseInt(document.getElementById('deliveryArea').value);
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const grandTotal = subtotal + area;
 
-            const orderId = "ROVIX-" + Math.floor(10000 + Math.random() * 90000);
+            const orderId = "ROVIX-" + Math.floor(100000 + Math.random() * 900000);
 
-            document.getElementById('recID').innerText = `#${orderId}`;
-            document.getElementById('recName').innerText = name;
-            document.getElementById('recPhone').innerText = phone;
-            document.getElementById('recTotal').innerText = `৳${grandTotal.toLocaleString()}`;
+            try {
+                // 1. Insert Order into Supabase
+                const { error: ordErr } = await supabaseClient.from('orders').insert([{
+                    order_id: orderId,
+                    customer_name: name,
+                    customer_phone: phone,
+                    customer_address: address,
+                    delivery_charge: area,
+                    subtotal: subtotal,
+                    grand_total: grandTotal,
+                    status: 'Pending'
+                }]);
+                if(ordErr) throw ordErr;
 
-            closeModal('checkoutModal');
-            openModal('successModal');
+                // 2. Insert Order Items & Deduct Stock
+                for(let item of cart) {
+                    await supabaseClient.from('order_items').insert([{
+                        order_id: orderId,
+                        product_id: item.id,
+                        product_name: item.name,
+                        price: item.price,
+                        quantity: item.qty
+                    }]);
 
-            // Reset cart
-            cart = [];
-            updateCartUI();
+                    const newStock = Math.max(0, (item.stock || 10) - item.qty);
+                    await supabaseClient.from('products').update({ stock: newStock }).eq('id', item.id);
+                }
+
+                document.getElementById('recID').innerText = `#${orderId}`;
+                document.getElementById('recName').innerText = name;
+                document.getElementById('recPhone').innerText = phone;
+                document.getElementById('recTotal').innerText = `৳${grandTotal.toLocaleString()}`;
+
+                closeModal('checkoutModal');
+                openModal('successModal');
+
+                cart = [];
+                updateCartUI();
+            } catch (err) {
+                alert('অর্ডার সাবমিট করতে সমস্যা হয়েছে: ' + err.message);
+            }
         }
 
         // Quick View Modal Popup
@@ -1263,12 +1211,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                     <img src="${p.image}" class="w-full h-72 object-cover rounded-xl border">
                     <div class="space-y-4">
-                        <span class="bg-leather-900 text-gold-400 text-xs font-bold px-2.5 py-1 rounded">${p.badge}</span>
+                        <span class="bg-leather-900 text-gold-400 text-xs font-bold px-2.5 py-1 rounded">${p.badge || 'ROVIX'}</span>
                         <h2 class="text-xl font-bold text-leather-900">${p.name}</h2>
-                        <p class="text-xs text-gray-600 leading-relaxed">${p.desc}</p>
+                        <p class="text-xs text-gray-600 leading-relaxed">${p.description || p.name}</p>
                         <div class="flex items-baseline gap-3">
                             <span class="text-2xl font-black text-gold-600">৳${p.price}</span>
-                            <span class="text-sm text-gray-400 line-through">৳${p.originalPrice}</span>
+                            <span class="text-sm text-gray-400 line-through">৳${p.original_price || p.price + 500}</span>
                         </div>
                         <div class="space-y-2 pt-2">
                             <button onclick="addToCart(${p.id}); closeModal('quickViewModal');" class="w-full bg-leather-100 hover:bg-leather-200 text-leather-900 font-bold py-3 rounded-xl transition text-sm">
