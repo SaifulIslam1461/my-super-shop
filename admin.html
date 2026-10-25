@@ -51,7 +51,7 @@
 
         <div id="sidebarOverlay" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/60 z-40 md:hidden"></div>
 
-        <!-- Comprehensive 18-Item Sidebar -->
+        <!-- Sidebar Navigation -->
         <aside id="adminSidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-leather-900 text-white flex flex-col justify-between z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
             <div class="flex-1 overflow-y-auto">
                 <div class="h-16 md:h-20 flex items-center justify-between px-6 border-b border-leather-800">
@@ -96,8 +96,6 @@
                 
                 <!-- 1. DASHBOARD OVERVIEW TAB -->
                 <div id="tab-dashboard" class="tab-content space-y-6">
-                    
-                    <!-- Comprehensive Metric Grid -->
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                         <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-bangladeshi-taka-sign"></i></div>
@@ -151,7 +149,7 @@
                         </div>
                     </div>
 
-                    <!-- Quick Actions Widget Bar -->
+                    <!-- Quick Actions -->
                     <div class="bg-leather-900 p-4 rounded-2xl shadow-md text-white">
                         <h4 class="text-xs font-bold text-gold-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-bolt mr-1"></i> Quick Actions</h4>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -173,7 +171,7 @@
                         </div>
                     </div>
 
-                    <!-- Recent Orders & Low Stock Tables Grid -->
+                    <!-- Recent Orders & Low Stock -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100">
                             <div class="flex items-center justify-between mb-3">
@@ -214,11 +212,6 @@
                             <input type="text" id="prodSearchInput" onkeyup="filterProductsTable()" placeholder="পণ্য খুঁজুন..." class="border rounded-xl p-2 text-xs bg-white w-48 outline-none focus:ring-1 focus:ring-gold-500">
                             <select id="prodCatFilter" onchange="filterProductsTable()" class="border rounded-xl p-2 text-xs bg-white outline-none">
                                 <option value="all">সকল ক্যাটাগরি</option>
-                                <option value="short-wallet">Short Wallet</option>
-                                <option value="long-wallet">Long Wallet</option>
-                                <option value="card-holder">Card Holder</option>
-                                <option value="shoes">Shoes</option>
-                                <option value="accessories">Accessories</option>
                             </select>
                         </div>
                         <button onclick="openProductModal()" class="bg-leather-900 text-gold-400 px-4 py-2 rounded-xl text-xs font-bold shadow hover:bg-leather-800 transition"><i class="fa-solid fa-plus mr-1"></i> নতুন পণ্য যোগ করুন</button>
@@ -235,11 +228,17 @@
                     </div>
                 </div>
 
-                <!-- 3. CATEGORIES TAB -->
+                <!-- 3. CATEGORIES TAB (Updated with Add & Delete capability) -->
                 <div id="tab-categories" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">ক্যাটাগরি ম্যানেজমেন্ট</h2>
-                    <div class="bg-white rounded-2xl p-4 border shadow-sm max-w-md">
-                        <div class="space-y-3" id="categoryListContainer"></div>
+                    <div class="bg-white rounded-2xl p-4 sm:p-6 border shadow-sm max-w-lg space-y-4">
+                        <div class="flex gap-2">
+                            <input type="text" id="newCategoryName" placeholder="নতুন ক্যাটাগরির নাম দিন..." class="border rounded-xl p-2.5 text-xs flex-1 outline-none focus:ring-2 focus:ring-gold-500">
+                            <button onclick="addNewCategory()" class="bg-leather-900 text-gold-400 px-4 py-2.5 rounded-xl text-xs font-bold shadow hover:bg-leather-800">যোগ করুন</button>
+                        </div>
+                        <div class="space-y-2 pt-2" id="categoryListContainer">
+                            <!-- Populated dynamically -->
+                        </div>
                     </div>
                 </div>
 
@@ -339,10 +338,24 @@
                     </div>
                 </div>
 
-                <!-- 12. CONTENT TAB -->
+                <!-- 12. CONTENT TAB (Updated with Interactive Website Content Edit Form) -->
                 <div id="tab-content" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">ওয়েবসাইট কনটেন্ট আপডেট</h2>
-                    <p class="text-xs text-gray-500">জেনারেল সেটিংস মেনু থেকে হেডারের নোটিশ ও ব্যানার মেসেজ দ্রুত পরিমার্জন করা যাবে।</p>
+                    <form id="websiteContentForm" onsubmit="saveWebsiteContent(event)" class="bg-white rounded-2xl shadow-sm border p-4 sm:p-6 space-y-4 max-w-xl">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">অ্যানাউন্সমেন্ট বার মেসেজ (টপ নোটিশ)</label>
+                            <input type="text" id="contentAnnouncement" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="🔥 সারাদেশে জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম (Brand Name)</label>
+                            <input type="text" id="contentBrandName" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="ROVIX™">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">হেডার ফোন নম্বর</label>
+                            <input type="text" id="contentPhone" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="01700-000000">
+                        </div>
+                        <button type="submit" class="bg-leather-900 text-gold-400 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow">কনটেন্ট সেভ করুন</button>
+                    </form>
                 </div>
 
                 <!-- 13. NOTIFICATIONS TAB -->
@@ -402,7 +415,7 @@
         <button onclick="switchTab('inventory')" class="flex flex-col items-center gap-1"><i class="fa-solid fa-warehouse text-base"></i><span>স্টক</span></button>
     </div>
 
-    <!-- Product Add/Edit Modal (With Local File Multi-Image Upload Support) -->
+    <!-- Product Add/Edit Modal -->
     <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 hidden">
         <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="productModalTitle" class="font-bold text-base sm:text-lg">নতুন পণ্য যোগ করুন</h3>
@@ -412,11 +425,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div><label class="block text-xs font-bold mb-1">ক্যাটাগরি</label>
                         <select id="prodCategory" class="w-full border rounded-lg p-2 text-sm bg-white">
-                            <option value="short-wallet">Short Wallet</option>
-                            <option value="long-wallet">Long Wallet</option>
-                            <option value="card-holder">Card Holder</option>
-                            <option value="shoes">Shoes</option>
-                            <option value="accessories">Accessories</option>
+                            <!-- Dynamic Categories -->
                         </select>
                     </div>
                     <div><label class="block text-xs font-bold mb-1">স্টক পরিমাণ</label><input type="number" id="prodStock" required value="10" class="w-full border rounded-lg p-2 text-sm"></div>
@@ -426,15 +435,13 @@
                     <div><label class="block text-xs font-bold mb-1">আগের মূল্য (৳)</label><input type="number" id="prodOrigPrice" required class="w-full border rounded-lg p-2 text-sm"></div>
                 </div>
 
-                <!-- Local File Upload for Multiple Images -->
                 <div>
-                    <label class="block text-xs font-bold mb-1">প্রোডাক্টের ছবি আপলোড করুন (একাধিক ছবি সিলেক্ট করা যাবে)</label>
+                    <label class="block text-xs font-bold mb-1">প্রোডাক্টের ছবি আপলোড করুন</label>
                     <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleImageSelection(event)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
-                    <p class="text-[10px] text-gray-500 mt-1">অথবা নিচে সরাসরি ছবির URL দিতে পারেন:</p>
+                    <p class="text-[10px] text-gray-500 mt-1">অথবা সরাসরি ছবির URL দিতে পারেন:</p>
                 </div>
                 <div><input type="url" id="prodImage" placeholder="https://..." class="w-full border rounded-lg p-2 text-sm"></div>
                 
-                <!-- Image Preview Grid -->
                 <div id="imagePreviewContainer" class="flex gap-2 flex-wrap pt-1"></div>
 
                 <div><label class="block text-xs font-bold mb-1">বিবরণ</label><textarea id="prodDesc" class="w-full border rounded-lg p-2 text-sm" rows="2"></textarea></div>
