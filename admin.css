@@ -10,7 +10,7 @@ body {
 .text-gold-400 { color: #f3e5ab; }
 .text-gold-500 { color: #d4af37; }
 
-/* Custom Mobile Scrollbar */
+/* Dashboard Responsive Scrollbar */
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
