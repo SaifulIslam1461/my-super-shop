@@ -1,1 +1,1326 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HERIKEN™ - Premium Genuine Leather Goods Bangladesh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Hind Siliguri & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        leather: {
+                            50: '#fdfbf7',
+                            100: '#f7f0e6',
+                            200: '#eedac4',
+                            300: '#e1be9b',
+                            400: '#d09b6e',
+                            500: '#b87642',
+                            600: '#8b4513',
+                            700: '#5c2d0c',
+                            800: '#381b07',
+                            900: '#1a0f0a',
+                        },
+                        gold: {
+                            400: '#f3e5ab',
+                            500: '#d4af37',
+                            600: '#aa8c2c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            color: #1a0f0a;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa8c2c 100%);
+        }
+        .leather-gradient {
+            background: linear-gradient(135deg, #1a0f0a 0%, #381b07 100%);
+        }
+        /* Custom Keyframe Animations */
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker {
+            display: flex;
+            width: 200%;
+            animation: ticker 25s linear infinite;
+        }
+        .animate-ticker:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-leather-50 min-h-screen flex flex-col justify-between">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-leather-900 text-gold-400 text-xs sm:text-sm py-2 px-4 text-center font-medium border-b border-gold-500/20 flex justify-between items-center overflow-hidden">
+        <div class="hidden sm:flex items-center gap-4 text-xs text-amber-200/80">
+            <span><i class="fa-solid fa-shield-halved text-gold-500 mr-1"></i> ১০০% অরিজিনাল লেদার গ্যারান্টি</span>
+            <span><i class="fa-solid fa-truck-fast text-gold-500 mr-1"></i> ক্যাশ অন ডেলিভারি</span>
+        </div>
+        <div class="w-full sm:w-auto text-center font-semibold tracking-wide">
+            🔥 সারাদেশ জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+ | সারাদেশে ক্যাশ অন ডেলিভারি এভেলেবল!
+        </div>
+        <div class="hidden sm:flex items-center gap-3 text-xs">
+            <a href="tel:+8801700000000" class="hover:text-gold-500 transition"><i class="fa-solid fa-phone mr-1"></i> 01700-000000</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-leather-900/95 backdrop-blur-md text-white border-b border-leather-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-2 sm:gap-4">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 rounded-lg gold-gradient p-0.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition duration-300">
+                        <div class="w-full h-full bg-leather-900 rounded-[7px] flex items-center justify-center">
+                            <span class="text-gold-500 font-extrabold text-xl tracking-tighter">H</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-widest text-white group-hover:text-gold-400 transition">HERIKEN<span class="text-gold-500">™</span></span>
+                        <span class="text-[9px] uppercase tracking-[0.25em] text-amber-200/70 -mt-1 font-sans">Leather Crafts</span>
+                    </div>
+                </a>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-6 relative">
+                    <input type="text" id="searchInput" onkeyup="handleSearch(this.value)" placeholder="মানিব্যাগ, বেল্ট, জুতা অথবা প্রোডাক্ট খুঁজুন..." 
+                           class="w-full bg-leather-800/80 text-white placeholder-gray-400 text-sm rounded-full px-5 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-gold-500 border border-leather-700 transition">
+                    <button class="absolute right-3 top-2.5 text-gold-400 hover:text-gold-500">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    
+                    <!-- Quick Live Search Dropdown -->
+                    <div id="searchDropdown" class="hidden absolute left-0 right-0 top-12 bg-leather-900 border border-leather-700 rounded-xl shadow-2xl p-2 z-50 max-h-80 overflow-y-auto">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Navigation Actions -->
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <!-- Track Order Button -->
+                    <button onclick="openModal('trackModal')" class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-amber-200 hover:text-gold-400 bg-leather-800/60 hover:bg-leather-800 px-3 py-2 rounded-lg border border-leather-700 transition">
+                        <i class="fa-solid fa-truck-ramp-box text-gold-500"></i>
+                        <span>অর্ডার ট্র্যাক</span>
+                    </button>
+
+                    <!-- Wishlist Button -->
+                    <button onclick="showToast('উইশলিস্টে আপডেট করা হয়েছে!')" class="relative p-2 text-gray-300 hover:text-gold-400 transition">
+                        <i class="fa-regular fa-heart text-xl"></i>
+                        <span id="wishlistCount" class="absolute -top-1 -right-1 bg-gold-500 text-leather-900 font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+
+                    <!-- Cart Drawer Trigger Button -->
+                    <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-leather-900 px-4 py-2 rounded-full font-bold text-sm shadow-lg hover:shadow-gold-500/20 transition transform active:scale-95">
+                        <i class="fa-solid fa-bag-shopping text-base"></i>
+                        <span class="hidden sm:inline">কার্ট</span>
+                        <span id="cartCountBadge" class="bg-leather-900 text-gold-400 font-bold text-xs px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories Nav Menu -->
+            <nav class="flex items-center space-x-1 sm:space-x-6 overflow-x-auto py-3 text-sm font-medium border-t border-leather-800/80 hide-scrollbar text-amber-100/90 whitespace-nowrap">
+                <button onclick="filterCategory('all')" class="category-btn active px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition">সকল কালেকশন</button>
+                <button onclick="filterCategory('short-wallet')" class="category-btn px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition"><i class="fa-solid fa-wallet text-gold-500/70 mr-1.5"></i>শর্ট ওয়ালেট</button>
+                <button onclick="filterCategory('long-wallet')" class="category-btn px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition"><i class="fa-solid fa-book-open text-gold-500/70 mr-1.5"></i>লং ওয়ালেট</button>
+                <button onclick="filterCategory('card-holder')" class="category-btn px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition"><i class="fa-regular fa-id-card text-gold-500/70 mr-1.5"></i>কার্ড হোল্ডার</button>
+                <button onclick="filterCategory('shoes')" class="category-btn px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition"><i class="fa-solid fa-shoe-prints text-gold-500/70 mr-1.5"></i>লেদার শু</button>
+                <button onclick="filterCategory('accessories')" class="category-btn px-3 py-1 rounded-md hover:text-gold-400 hover:bg-leather-800/50 transition"><i class="fa-solid fa-ring text-gold-500/70 mr-1.5"></i>বেল্ট ও এক্সেসরিজ</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Banner Section -->
+        <section class="relative bg-leather-900 text-white overflow-hidden py-12 sm:py-20 border-b border-gold-500/20">
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-leather-800/90 border border-gold-500/40 text-gold-400 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-inner">
+                            <i class="fa-solid fa-crown text-gold-500"></i>
+                            <span>হাতে তৈরি ১০০% খাঁটি চামড়ার অভিজ্ঞতা</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
+                            আসল চামড়া, আসল অনুভব— <br class="hidden sm:inline">
+                            <span class="text-transparent bg-clip-text gold-gradient">একবার ছুঁলেই বুঝবেন!</span>
+                        </h1>
+                        <p class="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                            হেরিকেন লেদার নিয়ে এলো সর্বোচ্চ মানের গরু ও ভেড়ার চামড়া দিয়ে নিখুঁত ফিনিশিংয়ে তৈরি ওয়ালেট, কার্ড হোল্ডার ও জুতা। শতভাগ প্রিমিয়াম গ্যারান্টি সহ দীর্ঘস্থায়ী স্টাইল।
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#products-section" class="w-full sm:w-auto bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-leather-900 font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-gold-500/20 transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 text-base">
+                                <span>এখনই অর্ডার করুন</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
+                            <button onclick="openModal('trackModal')" class="w-full sm:w-auto bg-leather-800 hover:bg-leather-700 text-amber-200 border border-leather-600 font-medium px-6 py-4 rounded-xl transition text-center flex items-center justify-center gap-2 text-base">
+                                <i class="fa-solid fa-location-dot text-gold-400"></i>
+                                <span>অর্ডার স্ট্যাটাস দেখুন</span>
+                            </button>
+                        </div>
+
+                        <!-- Trust Badge Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-leather-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-leather-800 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0">
+                                    <i class="fa-solid fa-gem text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-white">১০০% আসল চামড়া</h4>
+                                    <p class="text-[10px] text-gray-400">খাঁটি চামড়ার নিশ্চিয়তা</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-leather-800 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0">
+                                    <i class="fa-solid fa-hand-holding-heart text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-white">হ্যান্ডক্রাফটেড</h4>
+                                    <p class="text-[10px] text-gray-400">দক্ষ কারিগরের কাজ</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-leather-800 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0">
+                                    <i class="fa-solid fa-truck-ramp-box text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-white">ক্যাশ অন ডেলিভারি</h4>
+                                    <p class="text-[10px] text-gray-400">পণ্য দেখে মূল্য পরিশোধ</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-leather-800 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0">
+                                    <i class="fa-solid fa-users text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-xs font-bold text-white">২,০০,০০০+</h4>
+                                    <p class="text-[10px] text-gray-400">সন্তুষ্ট গ্রাহক</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Showcase Card -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-1 gold-gradient rounded-3xl blur opacity-30 animate-pulse"></div>
+                            <div class="relative bg-leather-800/80 border border-gold-500/30 rounded-3xl p-6 shadow-2xl backdrop-blur-sm overflow-hidden">
+                                <div class="absolute top-4 right-4 bg-red-600 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest shadow">
+                                    ৩০% ছাড়!
+                                </div>
+                                <img id="heroProductImage" src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80" alt="Heriken Premium Leather Wallet" class="w-full h-72 sm:h-80 object-cover rounded-2xl shadow-md transition duration-500 hover:scale-105">
+                                <div class="mt-5 space-y-2">
+                                    <div class="flex justify-between items-baseline">
+                                        <h3 class="text-lg font-bold text-white">Heriken Vintage Executive Wallet</h3>
+                                        <div class="text-gold-400 font-extrabold text-xl">৳১,450 <span class="text-xs text-gray-400 line-through">৳২,050</span></div>
+                                    </div>
+                                    <p class="text-xs text-gray-300">১০০% অরিজিনাল কাউহাইড লেদার, RFID প্রটেক্টেড, ১২টি কার্ড স্লট ও ক্যাশ চেম্বার।</p>
+                                    <button onclick="directCheckout(1)" class="w-full mt-2 gold-gradient hover:opacity-95 text-leather-900 font-bold py-3 rounded-xl transition shadow text-sm">
+                                        সহজ ১-ক্লিকে অর্ডার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Grid Showcase -->
+        <section class="py-12 bg-leather-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="text-gold-600 font-bold text-xs uppercase tracking-widest">ক্যাটাগরি সমূহ</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-leather-900 mt-1">পছন্দের লেদার কালেকশন বেছে নিন</h2>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div onclick="filterCategory('short-wallet')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">শর্ট ওয়ালেট</h3>
+                        <p class="text-[11px] text-gray-500">৩২ টি ডিজাইন</p>
+                    </div>
+
+                    <div onclick="filterCategory('long-wallet')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">লং ওয়ালেট</h3>
+                        <p class="text-[11px] text-gray-500">১৮ টি ডিজাইন</p>
+                    </div>
+
+                    <div onclick="filterCategory('card-holder')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-regular fa-id-card"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">কার্ড হোল্ডার</h3>
+                        <p class="text-[11px] text-gray-500">১৫ টি ডিজাইন</p>
+                    </div>
+
+                    <div onclick="filterCategory('shoes')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-solid fa-shoe-prints"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">লেদার জুতা</h3>
+                        <p class="text-[11px] text-gray-500">২৪ টি ডিজাইন</p>
+                    </div>
+
+                    <div onclick="filterCategory('accessories')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-solid fa-tape"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">লেদার বেল্ট</h3>
+                        <p class="text-[11px] text-gray-500">২০ টি ডিজাইন</p>
+                    </div>
+
+                    <div onclick="filterCategory('all')" class="cursor-pointer bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl border border-leather-200/60 text-center group transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-leather-100 group-hover:bg-gold-500 text-leather-800 group-hover:text-leather-900 flex items-center justify-center text-2xl transition duration-300">
+                            <i class="fa-solid fa-border-all"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-leather-900 mt-3 group-hover:text-gold-600 transition">সবগুলো দেখুন</h3>
+                        <p class="text-[11px] text-gray-500">১০০+ প্রোডাক্ট</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Watch & Shop Reels Section -->
+        <section class="py-12 bg-leather-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 text-gold-400 font-bold text-xs uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-circle-play text-red-500 animate-pulse"></i>
+                            <span>ভিডিও রিভিউ ও প্রোডাক্ট রিলস</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">দেখুন, পছন্দ করুন ও অর্ডার করুন</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-md">বাস্তব ভিডিওতে হেরিকেন প্রোডাক্টের চামড়ার টেক্সচার এবং ফিনিশিং সরাসরি দেখে নিশ্চিত হোন।</p>
+                </div>
+
+                <!-- Video Cards Slider/Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <!-- Reel 1 -->
+                    <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
+                        <div class="aspect-[9/14] bg-leather-900 relative">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
+                            
+                            <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 left-3 right-3 text-left">
+                                <span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">লাইভ ভিডিও</span>
+                                <h4 class="text-sm font-bold text-white mt-1 line-clamp-1">স্যামসন মেটাল চেইন শর্ট ওয়ালেট</h4>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-gold-400 font-extrabold text-xs">৳১,২৯০</span>
+                                    <button onclick="directCheckout(2)" class="bg-gold-500 hover:bg-gold-400 text-leather-900 text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                        অর্ডার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reel 2 -->
+                    <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
+                        <div class="aspect-[9/14] bg-leather-900 relative">
+                            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
+                            
+                            <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 left-3 right-3 text-left">
+                                <span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">আগুনে পরীক্ষা</span>
+                                <h4 class="text-sm font-bold text-white mt-1 line-clamp-1">এক্সিকিউটিভ লং ওয়ালেট ব্রাউন</h4>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-gold-400 font-extrabold text-xs">৳১,৮৫০</span>
+                                    <button onclick="directCheckout(3)" class="bg-gold-500 hover:bg-gold-400 text-leather-900 text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                        অর্ডার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reel 3 -->
+                    <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
+                        <div class="aspect-[9/14] bg-leather-900 relative">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
+                            
+                            <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 left-3 right-3 text-left">
+                                <span class="bg-gold-500 text-leather-900 text-[10px] font-extrabold px-2 py-0.5 rounded">বেস্ট সেলার</span>
+                                <h4 class="text-sm font-bold text-white mt-1 line-clamp-1">হ্যান্ডমেড ড্রেস শু লেদার</h4>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-gold-400 font-extrabold text-xs">৳৩,৪৫০</span>
+                                    <button onclick="directCheckout(5)" class="bg-gold-500 hover:bg-gold-400 text-leather-900 text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                        অর্ডার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reel 4 -->
+                    <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
+                        <div class="aspect-[9/14] bg-leather-900 relative">
+                            <img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
+                            
+                            <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 left-3 right-3 text-left">
+                                <span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">হট ডিল</span>
+                                <h4 class="text-sm font-bold text-white mt-1 line-clamp-1">মিনিমাল পপ-আপ কার্ড হোল্ডার</h4>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-gold-400 font-extrabold text-xs">৳৮৫০</span>
+                                    <button onclick="directCheckout(4)" class="bg-gold-500 hover:bg-gold-400 text-leather-900 text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                        অর্ডার করুন
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Showcase Section -->
+        <section id="products-section" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between border-b border-leather-200 pb-5 mb-8 gap-4">
+                <div>
+                    <span class="text-gold-600 font-extrabold text-xs uppercase tracking-widest">HERIKEN COLLECTION</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-leather-900">আমাদের প্রিমিয়াম কালেকশন</h2>
+                </div>
+
+                <!-- Product Filters -->
+                <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 hide-scrollbar">
+                    <button onclick="filterCategory('all')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-leather-900 text-white shadow">সবগুলো</button>
+                    <button onclick="filterCategory('short-wallet')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-leather-800 border border-leather-200 hover:bg-leather-100">শর্ট ওয়ালেট</button>
+                    <button onclick="filterCategory('long-wallet')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-leather-800 border border-leather-200 hover:bg-leather-100">লং ওয়ালেট</button>
+                    <button onclick="filterCategory('card-holder')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-leather-800 border border-leather-200 hover:bg-leather-100">কার্ড হোল্ডার</button>
+                    <button onclick="filterCategory('shoes')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-leather-800 border border-leather-200 hover:bg-leather-100">জুতা</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically Populated via JS -->
+            </div>
+        </section>
+
+        <!-- Craftsmanship & Brand Guarantee Showcase -->
+        <section class="py-16 bg-leather-900 text-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="text-gold-400 font-bold text-xs uppercase tracking-widest">কেন হেরিকেন সেরা?</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white mt-2 mb-6 leading-tight">
+                            সাত বছরেরও বেশি সময় ধরে খাঁটি চামড়ার আস্থার প্রতীক!
+                        </h2>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                            আমরা কৃত্রিম বা রেক্সিন লেদার সম্পূর্ণ বর্জন করি। হেরিকেনের প্রতিটি ওয়ালেট এবং জুতা ১০০% খাঁটি গরু ও ভেড়ার চামড়া কেটে সম্পূর্ণ হাতে সেলাই ও ফিনিশিং দেওয়া হয়। আমাদের লক্ষ্য একটাই— দীর্ঘস্থায়ী ও প্রিমিয়াম প্রোডাক্ট নিশ্চিত করা।
+                        </p>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-leather-800">
+                            <div>
+                                <p class="text-3xl font-black text-gold-400">৭+</p>
+                                <p class="text-xs text-gray-400">বছরের অভিজ্ঞতা</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-black text-gold-400">২০০K+</p>
+                                <p class="text-xs text-gray-400">সন্তুষ্ট গ্রাহক</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-black text-gold-400">১০০%</p>
+                                <p class="text-xs text-gray-400">জেনুইন লেদার</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-black text-gold-400">২ বছর</p>
+                                <p class="text-xs text-gray-400">কোয়ালিটি ওয়ারেন্টি</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Leather Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Shoe Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full mt-6">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Reviews Section -->
+        <section class="py-16 bg-leather-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <div class="inline-flex items-center gap-1 text-gold-500 font-extrabold text-xl mb-1">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <span class="text-leather-900 font-bold text-sm ml-2">৪.৮/৫ (১৩,৬৭৪+ রিভিউ)</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-leather-900">গ্রাহকদের ভালোবাসার গল্প</h2>
+                    <p class="text-gray-600 text-xs sm:text-sm mt-1">আমাদের সম্মানিত কাস্টমারদের সত্য মন্তব্য ও ছবিসহ রিভিউ</p>
+                </div>
+
+                <!-- Reviews Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-leather-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
+                                        রা
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-leather-900">রাশেদুল ইসলাম</h4>
+                                        <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (ঢাকা)</p>
+                                    </div>
+                                </div>
+                                <div class="text-gold-500 text-xs">
+                                    ★★★★★
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
+                                "ওয়ালেটটির চামড়া আস আসলেই অরিজিনাল। আগুন দিয়ে একটু টেস্ট করেছিলাম, বিন্দুমাত্র কোন ক্ষতি হয়নি। সেলাই ফিনিশিং অনেক সুন্দর।"
+                            </p>
+                        </div>
+                        <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <span class="text-[11px] font-medium text-leather-800 truncate">Heriken Vintage Executive Wallet</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-leather-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
+                                        তা
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-leather-900">তানভীর আহমেদ</h4>
+                                        <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (চট্টগ্রাম)</p>
+                                    </div>
+                                </div>
+                                <div class="text-gold-500 text-xs">
+                                    ★★★★★
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
+                                "মাত্র ২ দিনে ডেলিভারি পেয়েছি। বাক্সের প্যাকিং এবং ফ্রি গিফট মেটালের কি-রিং টা দারুণ ছিল। ধন্যবাদ হেরিকেন!"
+                            </p>
+                        </div>
+                        <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <span class="text-[11px] font-medium text-leather-800 truncate">Samson Chain Wallet Black</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-leather-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
+                                        মাহ
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-leather-900">মাহমুদুল হাসান</h4>
+                                        <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (সিলেট)</p>
+                                    </div>
+                                </div>
+                                <div class="text-gold-500 text-xs">
+                                    ★★★★★
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-700 leading-relaxed italic mb-4">
+                                "জুতার ফিনিশিং প্রিমিয়াম। পায়ে পরে অনেক আরামদায়ক। ইনসোল অনেক সফট। অফিস ব্যবহারের জন্য এক কথায় সেরা।"
+                            </p>
+                        </div>
+                        <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <span class="text-[11px] font-medium text-leather-800 truncate">Heriken Classic Formal Shoe</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- International Press & Ticker Ticker Section -->
+        <section class="bg-leather-900 text-amber-200 py-6 overflow-hidden border-t border-b border-gold-500/20">
+            <div class="max-w-7xl mx-auto px-4 text-center mb-3">
+                <span class="text-[11px] uppercase tracking-widest text-gold-400 font-bold">মিডিয়া ফোকাস ও আন্তর্জাতিক স্বীকৃতি</span>
+            </div>
+            <div class="relative w-full overflow-hidden">
+                <div class="animate-ticker flex items-center gap-12 text-sm font-semibold opacity-80 whitespace-nowrap">
+                    <span><i class="fa-solid fa-newspaper text-gold-500 mr-2"></i> FEATURED IN THE DAILY STAR</span>
+                    <span><i class="fa-solid fa-award text-gold-500 mr-2"></i> EXPORT QUALITY TO DUBAI & USA</span>
+                    <span><i class="fa-solid fa-gem text-gold-500 mr-2"></i> 100% GENUINE COW LEATHER</span>
+                    <span><i class="fa-solid fa-newspaper text-gold-500 mr-2"></i> প্রথম আলো ফিচার্ড</span>
+                    <span><i class="fa-solid fa-shield-halved text-gold-500 mr-2"></i> 2 YEARS QUALITY WARRANTY</span>
+                    <span><i class="fa-solid fa-newspaper text-gold-500 mr-2"></i> FEATURED IN THE DAILY STAR</span>
+                    <span><i class="fa-solid fa-award text-gold-500 mr-2"></i> EXPORT QUALITY TO DUBAI & USA</span>
+                    <span><i class="fa-solid fa-gem text-gold-500 mr-2"></i> 100% GENUINE COW LEATHER</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-over Mini Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white text-leather-900 shadow-2xl flex flex-col justify-between">
+                
+                <!-- Drawer Header -->
+                <div class="p-5 bg-leather-900 text-white flex items-center justify-between border-b border-leather-800">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-gold-400 text-xl"></i>
+                        <h3 class="font-bold text-lg">আপনার শপিং কার্ট</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Cart Items list -->
+                <div id="cartDrawerItems" class="flex-1 overflow-y-auto p-5 space-y-4">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Drawer Footer & Summary -->
+                <div class="p-5 bg-leather-50 border-t border-leather-200 space-y-3">
+                    <div class="flex justify-between text-sm font-medium">
+                        <span class="text-gray-600">সাবটোটাল:</span>
+                        <span id="cartSubtotal" class="font-bold text-leather-900">৳০</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>শিপিং চার্জ:</span>
+                        <span>চেকআউটে হিসেব করা হবে</span>
+                    </div>
+                    <div class="flex justify-between text-base font-extrabold text-leather-900 border-t border-leather-200 pt-2">
+                        <span>সর্বমোট:</span>
+                        <span id="cartTotal" class="text-gold-600">৳০</span>
+                    </div>
+
+                    <button onclick="openCheckoutModal()" class="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-leather-900 font-bold py-3.5 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2">
+                        <span>ক্যাশ অন ডেলিভারিতে অর্ডার করুন</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direct One-Page Cash On Delivery Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl border border-leather-200 my-8">
+            <div class="bg-leather-900 text-white p-4 sm:p-5 flex justify-between items-center border-b border-leather-800">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-shield-heart text-gold-400 text-xl"></i>
+                    <h3 class="font-bold text-base sm:text-lg">ক্যাশ অন ডেলিভারি চেকআউট</h3>
+                </div>
+                <button onclick="closeModal('checkoutModal')" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="checkoutForm" onsubmit="submitOrder(event)" class="p-5 sm:p-6 space-y-5">
+                
+                <!-- Delivery Details Form -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-sm text-leather-900 border-b pb-2 border-leather-200 flex items-center gap-2">
+                        <span class="w-5 h-5 rounded-full bg-gold-500 text-leather-900 font-extrabold text-xs flex items-center justify-center">১</span>
+                        আপনার ডেলিভারি তথ্য দিন
+                    </h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">আপনার নাম *</label>
+                            <input type="text" id="custName" required placeholder="উদাহরণ: তানভীর আহমেদ" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">মোবাইল নম্বর *</label>
+                            <input type="tel" id="custPhone" required pattern="[0-9]{11}" placeholder="017XXXXXXXX" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">সম্পূর্ণ ঠিকানা *</label>
+                        <input type="text" id="custAddress" required placeholder="হাউজ নম্বর, রোড নম্বর, এলাকা বা থানা" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">ডেলিভারি এরিয়া বেছে নিন *</label>
+                            <select id="deliveryArea" onchange="updateCheckoutTotal()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none bg-white">
+                                <option value="70">ঢাকার ভেতরে (৳৭০)</option>
+                                <option value="130">ঢাকার বাইরে (৳১৩০)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
+                            <input type="text" id="custNote" placeholder="বিশেষ কোনো পরামর্শ থাকলে লিখুন" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Table -->
+                <div class="bg-leather-50 p-4 rounded-xl border border-leather-200/80 space-y-2">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-leather-800 mb-2">অর্ডার সামারি</h4>
+                    <div id="checkoutSummaryItems" class="space-y-1.5 text-xs text-gray-700 max-h-32 overflow-y-auto">
+                        <!-- Populated dynamically -->
+                    </div>
+                    <div class="border-t border-leather-200 pt-2 flex justify-between text-xs text-gray-600">
+                        <span>পণ্যমূল্য:</span>
+                        <span id="checkoutSubtotal">৳০</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-600">
+                        <span>ডেলিভারি চার্জ:</span>
+                        <span id="checkoutDeliveryCharge">৳৭০</span>
+                    </div>
+                    <div class="flex justify-between text-base font-extrabold text-leather-900 border-t border-leather-200 pt-2">
+                        <span>মোট প্রদেয় অর্থ (ক্যাশ অন ডেলিভারি):</span>
+                        <span id="checkoutGrandTotal" class="text-gold-600">৳০</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-leather-900 font-extrabold py-4 rounded-xl shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>অর্ডার নিশ্চিত করুন (৳<span id="btnTotal">0</span>)</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto hidden">
+        <div class="bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-leather-200 my-8 relative">
+            <button onclick="closeModal('quickViewModal')" class="absolute top-4 right-4 z-10 w-8 h-8 bg-leather-900/70 text-white rounded-full flex items-center justify-center hover:bg-leather-900">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="quickViewContent" class="p-6">
+                <!-- Dynamically Populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Tracking Modal -->
+    <div id="trackModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-leather-200 my-8">
+            <div class="bg-leather-900 text-white p-5 flex justify-between items-center border-b border-leather-800">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-truck-fast text-gold-400 text-xl"></i>
+                    <h3 class="font-bold text-base">আপনার অর্ডার ট্র্যাক করুন</h3>
+                </div>
+                <button onclick="closeModal('trackModal')" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">অর্ডার আইকন বা ফোন নম্বর</label>
+                    <input type="text" id="trackInput" placeholder="HK-10928 অথবা 017XXXXXXXX" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <button onclick="simulateTracking()" class="w-full bg-gold-500 hover:bg-gold-400 text-leather-900 font-bold py-3 rounded-lg transition text-sm">
+                    ট্র্যাক করুন
+                </button>
+
+                <div id="trackingResult" class="hidden pt-4 border-t border-leather-200 space-y-3">
+                    <div class="bg-leather-50 p-3 rounded-lg border text-xs">
+                        <p class="font-bold text-leather-900">অর্ডার নম্বর: #HK-88291</p>
+                        <p class="text-gray-600">গ্রাহক: মো: রফিকুল ইসলাম</p>
+                    </div>
+                    <!-- Status Timeline -->
+                    <div class="space-y-3 relative pl-6 border-l-2 border-gold-500 text-xs">
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 bg-gold-500 rounded-full border-2 border-white"></span>
+                            <p class="font-bold text-leather-900">অর্ডার গ্রহণ করা হয়েছে</p>
+                            <p class="text-[10px] text-gray-500">গতকাল, বিকাল ৪:৩০</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 bg-gold-500 rounded-full border-2 border-white"></span>
+                            <p class="font-bold text-leather-900">প্যাকিং ও কোয়ালিটি চেক সম্পন্ন</p>
+                            <p class="text-[10px] text-gray-500">আজ, সকাল ১০:১৫</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 bg-gold-500 rounded-full border-2 border-white animate-ping"></span>
+                            <p class="font-bold text-green-600">কুরিয়ারে হস্তান্তর করা হয়েছে (On the way)</p>
+                            <p class="text-[10px] text-gray-500">আজ, দুপুর ১২:০০ (Steadfast Courier)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Player Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 hidden">
+        <div class="bg-leather-900 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl relative border border-gold-500/30">
+            <button onclick="closeModal('videoModal')" class="absolute top-3 right-3 z-10 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="aspect-video w-full">
+                <iframe id="videoIframe" class="w-full h-full" src="" title="Heriken Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Receipt Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl border border-leather-200 space-y-4">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-black text-leather-900">ধন্যবাদ! আপনার অর্ডার সফল হয়েছে</h3>
+            <p class="text-xs text-gray-600">আমাদের প্রতিনিধি শীঘ্রই আপনাকে ফোন দিয়ে অর্ডারটি কনফার্ম করবেন।</p>
+            
+            <div class="bg-leather-50 p-4 rounded-xl border border-leather-200 text-left text-xs space-y-1">
+                <p><strong>অর্ডার ট্র্যাকিং আইডি:</strong> <span id="recID" class="text-gold-600 font-bold">#HK-00000</span></p>
+                <p><strong>গ্রাহকের নাম:</strong> <span id="recName">-</span></p>
+                <p><strong>ফোন নম্বর:</strong> <span id="recPhone">-</span></p>
+                <p><strong>মোট প্রদেয়:</strong> <span id="recTotal" class="font-bold text-leather-900">-</span> (ক্যাশ অন ডেলিভারি)</p>
+            </div>
+
+            <button onclick="closeModal('successModal')" class="w-full bg-leather-900 hover:bg-leather-800 text-gold-400 font-bold py-3 rounded-xl text-sm transition">
+                ঠিক আছে
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-leather-900 text-gold-400 border border-gold-500/40 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-gold-500 text-lg"></i>
+        <span id="toastMsg" class="text-xs font-semibold text-white">কার্টে যোগ করা হয়েছে!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-leather-900 text-white border-t border-leather-800 pt-12 pb-20 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-leather-800">
+                
+                <!-- Col 1 -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded gold-gradient flex items-center justify-center text-leather-900 font-extrabold text-lg">H</div>
+                        <span class="text-xl font-black text-white">HERIKEN™</span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        শতভাগ খাঁটি চামড়ার নিশ্চয়তায় প্রিমিয়াম ডিজাইনের ওয়ালেট, বেল্ট ও জুতা তৈরির বিশ্বস্ত ব্র্যান্ড।
+                    </p>
+                    <div class="flex gap-3 text-gold-400">
+                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">দ্রুত লিংক</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#products-section" class="hover:text-gold-400 transition">সকল প্রোডাক্ট</a></li>
+                        <li><a href="#" onclick="filterCategory('short-wallet')" class="hover:text-gold-400 transition">শর্ট ওয়ালেট</a></li>
+                        <li><a href="#" onclick="filterCategory('long-wallet')" class="hover:text-gold-400 transition">লং ওয়ালেট</a></li>
+                        <li><a href="#" onclick="filterCategory('shoes')" class="hover:text-gold-400 transition">লেদার শু</a></li>
+                        <li><a href="#" onclick="openModal('trackModal')" class="hover:text-gold-400 transition">অর্ডার ট্র্যাকিং</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">নীতিমালা</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#" class="hover:text-gold-400 transition">রিটার্ন ও রিফান্ড পলিসি</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition">প্রাইভেসি পলিসি</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition">টার্মস অ্যান্ড কন্ডিশন</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition">ডেলিভারি চার্জ তথ্য</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">যোগাযোগ করুন</h4>
+                    <div class="space-y-3 text-xs text-gray-300">
+                        <p><i class="fa-solid fa-location-dot text-gold-500 mr-2"></i>৩৬ জিগাতলা, ধানমণ্ডি, ঢাকা-১২০৯</p>
+                        <p><i class="fa-solid fa-phone text-gold-500 mr-2"></i>+880 1700-000000 (সকাল ৯টা - রাত ১০টা)</p>
+                        <p><i class="fa-solid fa-envelope text-gold-500 mr-2"></i>support@heriken.com</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+                <p>© ২০২৬ HERIKEN™. সর্বস্বত্ব সংরক্ষিত।</p>
+                <div class="flex items-center gap-3 text-lg text-gray-400">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <span class="text-xs font-bold bg-leather-800 px-2 py-1 rounded text-gold-400">বিকাশ / নগদ / ক্যাশ অন ডেলিভারি</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Floating Mobile Quick Actions Button -->
+    <div class="fixed bottom-4 right-4 z-40 sm:hidden flex flex-col gap-2">
+        <a href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- JavaScript App Logic -->
+    <script>
+        // Heriken Product Inventory Database
+        const products = [
+            {
+                id: 1,
+                name: "Heriken Vintage Executive Short Wallet",
+                category: "short-wallet",
+                price: 1450,
+                originalPrice: 2050,
+                rating: 4.9,
+                reviews: 128,
+                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+                badge: "BEST SELLER",
+                desc: "১০০% প্রিমিয়াম কাউহাইড জেনুইন লেদার। ১২টি কার্ড স্লট, ২ টি ক্যাশ চেম্বার এবং ১টি জিওমেট্রিক কয়েন পকেট।"
+            },
+            {
+                id: 2,
+                name: "Samson Metal Chain Short Wallet Black",
+                category: "short-wallet",
+                price: 1290,
+                originalPrice: 1800,
+                rating: 4.8,
+                reviews: 95,
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80",
+                badge: "POPULAR",
+                desc: "অরিজিনাল লেদারের সাথে মেটালিক ডিটেইলিং। আধুনিক ট্রাভেলার ও মেটাল প্রেমীদের জন্য।"
+            },
+            {
+                id: 3,
+                name: "Executive Long Passport & Mobile Wallet",
+                category: "long-wallet",
+                price: 1850,
+                originalPrice: 2500,
+                rating: 4.9,
+                reviews: 210,
+                image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80",
+                badge: "PREMIUM",
+                desc: "মোবাইল ফোন, পাসপোর্ট, চেকবুক ও নগদ টাকা একসঙ্গে রাখার প্রিমিয়াম লং ওয়ালেট।"
+            },
+            {
+                id: 4,
+                name: "Minimalist Pop-Up Leather Card Holder",
+                category: "card-holder",
+                price: 850,
+                originalPrice: 1200,
+                rating: 4.7,
+                reviews: 84,
+                image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80",
+                badge: "NEW",
+                desc: "অ্যালুমিনিয়াম পপ-আপ কেস ও বাইরে চামড়ার ফিনিশিং। RFID ব্লক প্রযুক্তি সহ।"
+            },
+            {
+                id: 5,
+                name: "Heriken Handcrafted Formal Oxford Shoes",
+                category: "shoes",
+                price: 3450,
+                originalPrice: 4800,
+                rating: 5.0,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
+                badge: "HOT DEAL",
+                desc: "সম্পূর্ণ হাতে সেলাই করা অরিজিনাল চামড়ার ফর্মাল জুতা। দীর্ঘস্থায়ী সোল ও আরামদায়ক ইনসোল।"
+            },
+            {
+                id: 6,
+                name: "Classic Italian Genuine Leather Belt",
+                category: "accessories",
+                price: 1150,
+                originalPrice: 1600,
+                rating: 4.8,
+                reviews: 142,
+                image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80",
+                badge: "BESTSELLER",
+                desc: "ইম্পোর্টেড মেটাল বাকল সহ ১০০% খাঁটি চামড়ার বেল্ট। ২ বছরের চামড়ার গ্যারান্টি।"
+            },
+            {
+                id: 7,
+                name: "Slim Bifold Tan Leather Wallet",
+                category: "short-wallet",
+                price: 1190,
+                originalPrice: 1650,
+                rating: 4.7,
+                reviews: 53,
+                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+                badge: "POPULAR",
+                desc: "স্লিম ডিজাইনের হালকা ট্যান কালারের শর্ট ওয়ালেট। পকেটে ভারী অনুভুতি হয় না।"
+            },
+            {
+                id: 8,
+                name: "Handmade Loafer Shoes Brown",
+                category: "shoes",
+                price: 2950,
+                originalPrice: 3900,
+                rating: 4.9,
+                reviews: 88,
+                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
+                badge: "NEW",
+                desc: "ক্যাজুয়াল ও ফর্মাল উভয় ব্যবহারের উপযোগী পিওর লেদার লফার শু।"
+            }
+        ];
+
+        // Global State Variables
+        let cart = [];
+        let wishlist = [];
+
+        // App Initialization
+        window.onload = function() {
+            renderProducts(products);
+            updateCartUI();
+        };
+
+        // Render Product Grid
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            if(items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-bold">কোন প্রোডাক্ট পাওয়া যায়নি!</div>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-leather-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div class="relative overflow-hidden bg-leather-50">
+                        ${p.badge ? `<span class="absolute top-3 left-3 z-10 bg-leather-900 text-gold-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-gold-500/30">${p.badge}</span>` : ''}
+                        
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
+                            <button onclick="openQuickView(${p.id})" class="w-10 h-10 rounded-full bg-white text-leather-900 hover:bg-gold-500 transition flex items-center justify-center shadow-lg" title="Quick View">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <div class="flex items-center text-gold-500 text-xs gap-1 mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-bold text-leather-900">${p.rating}</span>
+                                <span class="text-gray-400 font-normal">(${p.reviews})</span>
+                            </div>
+                            <h3 class="font-bold text-sm text-leather-900 line-clamp-2 hover:text-gold-600 transition cursor-pointer" onclick="openQuickView(${p.id})">${p.name}</h3>
+                        </div>
+
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-3">
+                                <span class="text-lg font-black text-leather-900">৳${p.price.toLocaleString()}</span>
+                                <span class="text-xs text-gray-400 line-through">৳${p.originalPrice.toLocaleString()}</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="addToCart(${p.id})" class="bg-leather-100 hover:bg-leather-200 text-leather-900 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>কার্ট</span>
+                                </button>
+                                <button onclick="directCheckout(${p.id})" class="gold-gradient hover:opacity-95 text-leather-900 text-xs font-extrabold py-2.5 rounded-xl transition shadow flex items-center justify-center gap-1">
+                                    <span>অর্ডার</span>
+                                    <i class="fa-solid fa-bolt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Category Filter Handling
+        function filterCategory(cat) {
+            if (cat === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+            }
+        }
+
+        // Search Bar Functionality
+        function handleSearch(query) {
+            const dropdown = document.getElementById('searchDropdown');
+            if(!query.trim()) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            const results = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+            if(results.length > 0) {
+                dropdown.innerHTML = results.map(p => `
+                    <div onclick="openQuickView(${p.id})" class="flex items-center gap-3 p-2 hover:bg-leather-800 rounded-lg cursor-pointer text-white">
+                        <img src="${p.image}" class="w-10 h-10 object-cover rounded">
+                        <div class="text-xs">
+                            <p class="font-bold">${p.name}</p>
+                            <p class="text-gold-400 font-extrabold">৳${p.price}</p>
+                        </div>
+                    </div>
+                `).join('');
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.innerHTML = `<p class="text-xs text-gray-400 p-2 text-center">কোন প্রোডাক্ট খুঁজে পাওয়া যায়নি</p>`;
+                dropdown.classList.remove('hidden');
+            }
+        }
+
+        // Cart State Logic
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const exist = cart.find(item => item.id === productId);
+
+            if(exist) {
+                exist.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${product.name}" কার্টে যোগ করা হয়েছে!`);
+        }
+
+        function updateCartQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += change;
+                if(item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            document.getElementById('cartCountBadge').innerText = totalQty;
+
+            // Render Mini Cart Drawer
+            const cartDrawerItems = document.getElementById('cartDrawerItems');
+            if(cart.length === 0) {
+                cartDrawerItems.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <i class="fa-solid fa-bag-shopping text-5xl text-gray-300"></i>
+                        <p class="text-sm font-bold text-gray-500">আপনার কার্ট খালি!</p>
+                    </div>
+                `;
+            } else {
+                cartDrawerItems.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-3 bg-leather-50 p-3 rounded-xl border border-leather-200">
+                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg border">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold text-leather-900 line-clamp-1">${item.name}</h4>
+                            <p class="text-xs text-gold-600 font-extrabold mt-0.5">৳${item.price} x ${item.qty}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="updateCartQty(${item.id}, -1)" class="w-5 h-5 bg-white border border-gray-300 rounded text-xs flex items-center justify-center font-bold">-</button>
+                                <span class="text-xs font-bold">${item.qty}</span>
+                                <button onclick="updateCartQty(${item.id}, 1)" class="w-5 h-5 bg-white border border-gray-300 rounded text-xs flex items-center justify-center font-bold">+</button>
+                            </div>
+                        </div>
+                        <button onclick="updateCartQty(${item.id}, -${item.qty})" class="text-gray-400 hover:text-red-600 text-sm">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('cartSubtotal').innerText = `৳${subtotal.toLocaleString()}`;
+            document.getElementById('cartTotal').innerText = `৳${subtotal.toLocaleString()}`;
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        // Direct One-Click Checkout
+        function directCheckout(productId) {
+            cart = [];
+            const p = products.find(item => item.id === productId);
+            cart.push({ ...p, qty: 1 });
+            updateCartUI();
+            openCheckoutModal();
+        }
+
+        function openCheckoutModal() {
+            if(cart.length === 0) {
+                showToast("অর্ডার করতে প্রথমে পণ্য কার্টে যুক্ত করুন!");
+                return;
+            }
+            document.getElementById('cartDrawer').classList.add('hidden');
+            updateCheckoutTotal();
+            openModal('checkoutModal');
+        }
+
+        function updateCheckoutTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const deliveryArea = parseInt(document.getElementById('deliveryArea').value || 70);
+            const grandTotal = subtotal + deliveryArea;
+
+            document.getElementById('checkoutSummaryItems').innerHTML = cart.map(i => `
+                <div class="flex justify-between">
+                    <span>${i.name} (${i.qty} টি)</span>
+                    <span class="font-bold">৳${i.price * i.qty}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('checkoutSubtotal').innerText = `৳${subtotal.toLocaleString()}`;
+            document.getElementById('checkoutDeliveryCharge').innerText = `৳${deliveryArea}`;
+            document.getElementById('checkoutGrandTotal').innerText = `৳${grandTotal.toLocaleString()}`;
+            document.getElementById('btnTotal').innerText = grandTotal.toLocaleString();
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const area = parseInt(document.getElementById('deliveryArea').value);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const grandTotal = subtotal + area;
+
+            const orderId = "HK-" + Math.floor(10000 + Math.random() * 90000);
+
+            document.getElementById('recID').innerText = `#${orderId}`;
+            document.getElementById('recName').innerText = name;
+            document.getElementById('recPhone').innerText = phone;
+            document.getElementById('recTotal').innerText = `৳${grandTotal.toLocaleString()}`;
+
+            closeModal('checkoutModal');
+            openModal('successModal');
+
+            // Reset cart
+            cart = [];
+            updateCartUI();
+        }
+
+        // Quick View Modal Popup
+        function openQuickView(id) {
+            const p = products.find(item => item.id === id);
+            const content = document.getElementById('quickViewContent');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <img src="${p.image}" class="w-full h-72 object-cover rounded-xl border">
+                    <div class="space-y-4">
+                        <span class="bg-leather-900 text-gold-400 text-xs font-bold px-2.5 py-1 rounded">${p.badge}</span>
+                        <h2 class="text-xl font-bold text-leather-900">${p.name}</h2>
+                        <p class="text-xs text-gray-600 leading-relaxed">${p.desc}</p>
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-2xl font-black text-gold-600">৳${p.price}</span>
+                            <span class="text-sm text-gray-400 line-through">৳${p.originalPrice}</span>
+                        </div>
+                        <div class="space-y-2 pt-2">
+                            <button onclick="addToCart(${p.id}); closeModal('quickViewModal');" class="w-full bg-leather-100 hover:bg-leather-200 text-leather-900 font-bold py-3 rounded-xl transition text-sm">
+                                কার্টে যোগ করুন
+                            </button>
+                            <button onclick="directCheckout(${p.id}); closeModal('quickViewModal');" class="w-full gold-gradient text-leather-900 font-extrabold py-3 rounded-xl transition text-sm shadow">
+                                এখনই ক্যাশ অন ডেলিভারিতে কিনুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('searchDropdown').classList.add('hidden');
+            openModal('quickViewModal');
+        }
+
+        // Order Tracking Simulation
+        function simulateTracking() {
+            const val = document.getElementById('trackInput').value;
+            if(!val) {
+                alert("দয়া করে আপনার অর্ডার নম্বর অথবা ফোন নম্বর দিন!");
+                return;
+            }
+            document.getElementById('trackingResult').classList.remove('hidden');
+        }
+
+        // Video Player Modal
+        function playVideoModal(url) {
+            document.getElementById('videoIframe').src = url;
+            openModal('videoModal');
+        }
+
+        // Generic Modal Helpers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            if(id === 'videoModal') {
+                document.getElementById('videoIframe').src = '';
+            }
+        }
+
+        // Toast Notification Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('opacity-0', 'translate-y-20');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-20');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
