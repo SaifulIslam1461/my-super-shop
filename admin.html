@@ -382,7 +382,7 @@
                     </div>
                 </div>
 
-                <!-- 16. GENERAL SETTINGS TAB (Updated with Facebook, YouTube & Location/Address) -->
+                <!-- 16. GENERAL SETTINGS TAB -->
                 <div id="tab-settings" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">সেটিংস</h2>
                     <form id="settingsForm" onsubmit="saveSettings(event)" class="bg-white rounded-2xl shadow-sm border p-4 sm:p-6 space-y-4 max-w-xl">
@@ -434,7 +434,7 @@
         <button onclick="switchTab('inventory')" class="flex flex-col items-center gap-1"><i class="fa-solid fa-warehouse text-base"></i><span>স্টক</span></button>
     </div>
 
-    <!-- Product Add/Edit Modal -->
+    <!-- Product Add/Edit Modal (With Video URL Input Support) -->
     <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 hidden">
         <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="productModalTitle" class="font-bold text-base sm:text-lg">নতুন পণ্য যোগ করুন</h3>
@@ -460,6 +460,12 @@
                 <div><input type="url" id="prodImage" placeholder="https://..." class="w-full border rounded-lg p-2 text-sm"></div>
                 
                 <div id="imagePreviewContainer" class="flex gap-2 flex-wrap pt-1"></div>
+
+                <!-- Product Video URL Input -->
+                <div>
+                    <label class="block text-xs font-bold mb-1">প্রোডাক্ট ভিডিও লিংক (YouTube / MP4 URL)</label>
+                    <input type="url" id="prodVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full border rounded-lg p-2 text-sm">
+                </div>
 
                 <div><label class="block text-xs font-bold mb-1">বিবরণ</label><textarea id="prodDesc" class="w-full border rounded-lg p-2 text-sm" rows="2"></textarea></div>
                 <div class="flex justify-end gap-2 pt-2">
