@@ -228,7 +228,7 @@
                     </div>
                 </div>
 
-                <!-- 3. CATEGORIES TAB (Updated with Add & Delete capability) -->
+                <!-- 3. CATEGORIES TAB -->
                 <div id="tab-categories" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">ক্যাটাগরি ম্যানেজমেন্ট</h2>
                     <div class="bg-white rounded-2xl p-4 sm:p-6 border shadow-sm max-w-lg space-y-4">
@@ -236,9 +236,7 @@
                             <input type="text" id="newCategoryName" placeholder="নতুন ক্যাটাগরির নাম দিন..." class="border rounded-xl p-2.5 text-xs flex-1 outline-none focus:ring-2 focus:ring-gold-500">
                             <button onclick="addNewCategory()" class="bg-leather-900 text-gold-400 px-4 py-2.5 rounded-xl text-xs font-bold shadow hover:bg-leather-800">যোগ করুন</button>
                         </div>
-                        <div class="space-y-2 pt-2" id="categoryListContainer">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <div class="space-y-2 pt-2" id="categoryListContainer"></div>
                     </div>
                 </div>
 
@@ -338,13 +336,13 @@
                     </div>
                 </div>
 
-                <!-- 12. CONTENT TAB (Updated with Interactive Website Content Edit Form) -->
+                <!-- 12. CONTENT TAB -->
                 <div id="tab-content" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">ওয়েবসাইট কনটেন্ট আপডেট</h2>
                     <form id="websiteContentForm" onsubmit="saveWebsiteContent(event)" class="bg-white rounded-2xl shadow-sm border p-4 sm:p-6 space-y-4 max-w-xl">
                         <div>
                             <label class="block text-xs font-bold mb-1">অ্যানাউন্সমেন্ট বার মেসেজ (টপ নোটিশ)</label>
-                            <input type="text" id="contentAnnouncement" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="🔥 সারাদেশে জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+...">
+                            <input type="text" id="contentAnnouncement" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="🔥 সারাদেশে জুড়ে ফ্রি শিপিং...">
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম (Brand Name)</label>
@@ -384,13 +382,34 @@
                     </div>
                 </div>
 
-                <!-- 16. GENERAL SETTINGS TAB -->
+                <!-- 16. GENERAL SETTINGS TAB (Updated with Facebook, YouTube & Location/Address) -->
                 <div id="tab-settings" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">সেটিংস</h2>
                     <form id="settingsForm" onsubmit="saveSettings(event)" class="bg-white rounded-2xl shadow-sm border p-4 sm:p-6 space-y-4 max-w-xl">
-                        <div><label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম</label><input type="text" id="settingBrand" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
-                        <div><label class="block text-xs font-bold mb-1">ফোন নম্বর</label><input type="text" id="settingPhone" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
-                        <div><label class="block text-xs font-bold mb-1">হোয়াটসঅ্যাপ নম্বর</label><input type="text" id="settingWhatsapp" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম</label>
+                            <input type="text" id="settingBrand" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="ROVIX™">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ফোন নম্বর</label>
+                            <input type="text" id="settingPhone" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="01700-000000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">হোয়াটসঅ্যাপ নম্বর</label>
+                            <input type="text" id="settingWhatsapp" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="8801700000000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ফেসবুক পেজ / প্রোফাইল লিংক</label>
+                            <input type="url" id="settingFacebook" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="https://facebook.com/rovix">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ইউটিউব চ্যানেল লিংক</label>
+                            <input type="url" id="settingYoutube" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="https://youtube.com/@rovix">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">লোকেশন / সম্পূর্ণ ঠিকানা</label>
+                            <input type="text" id="settingLocation" class="w-full border rounded-lg p-2.5 text-sm outline-none" placeholder="ধানমণ্ডি, ঢাকা-১২০৯">
+                        </div>
                         <button type="submit" class="bg-leather-900 text-gold-400 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow">সেভ করুন</button>
                     </form>
                 </div>
@@ -424,9 +443,7 @@
                 <div><label class="block text-xs font-bold mb-1">পণ্যের নাম</label><input type="text" id="prodName" required class="w-full border rounded-lg p-2 text-sm"></div>
                 <div class="grid grid-cols-2 gap-3">
                     <div><label class="block text-xs font-bold mb-1">ক্যাটাগরি</label>
-                        <select id="prodCategory" class="w-full border rounded-lg p-2 text-sm bg-white">
-                            <!-- Dynamic Categories -->
-                        </select>
+                        <select id="prodCategory" class="w-full border rounded-lg p-2 text-sm bg-white"></select>
                     </div>
                     <div><label class="block text-xs font-bold mb-1">স্টক পরিমাণ</label><input type="number" id="prodStock" required value="10" class="w-full border rounded-lg p-2 text-sm"></div>
                 </div>
