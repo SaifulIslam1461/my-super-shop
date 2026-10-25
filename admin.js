@@ -1,9 +1,10 @@
-// Admin Panel Core Logic
+// Extended Admin Panel Controller Logic
 let adminProducts = [];
 let adminOrders = [];
+let adminExpenses = [];
+let salesChartInstance = null;
 
 window.onload = async function() {
-    // Check Supabase Auth Session
     const { data: { session } } = await supabaseClient.auth.getSession();
     if(session) {
         showDashboard(session.user.email);
@@ -40,6 +41,9 @@ function showDashboard(email) {
     document.getElementById('loginSection').classList.add('hidden');
     document.getElementById('dashboardApp').classList.remove('hidden');
     document.getElementById('adminUserEmail').innerText = email;
+    if(document.getElementById('permEmail')) {
+        document.getElementById('permEmail').innerText = email;
+    }
     loadDashboardData();
 }
 
@@ -47,9 +51,11 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('bg-leather-800', 'text-gold-400'));
     
-    document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+    const targetTab = document.getElementById(`tab-${tabName}`);
+    if(targetTab) {
+        targetTab.classList.remove('hidden');
+    }
     
-    // Close sidebar on mobile after click
     const sidebar = document.getElementById('adminSidebar');
     if (!sidebar.classList.contains('-translate-x-full')) {
         toggleMobileSidebar();
@@ -58,38 +64,165 @@ function switchTab(tabName) {
     const titles = {
         'dashboard': 'ড্যাশবোর্ড ওভারভিউ',
         'products': 'পণ্য ব্যবস্থাপনা',
+        'categories': 'ক্যাটাগরি ম্যানেজমেন্ট',
         'orders': 'অর্ডার ম্যানেজমেন্ট',
+        'customers': 'কাস্টমার তালিকা',
         'inventory': 'ইনভেন্টরি স্টক',
-        'settings': 'ওয়েবসাইট সেটিংস'
+        'coupons': 'কুপন ও অফার',
+        'payments': 'পেমেন্ট ট্র্যাকিং',
+        'courier': 'কুরিয়ার ও শিপিং',
+        'expenses': 'খরচ রেজিস্টার',
+        'reports': 'সেলস রিপোর্টস',
+        'content': 'ওয়েবসাইট কনটেন্ট',
+        'notifications': 'নোটিফিকেশন',
+        'seo': 'SEO সেটিংস',
+        'permissions': 'অ্যাডমিন পারমিশন',
+        'settings': 'জেনারেল সেটিংস',
+        'backup': 'ডাটাবেস ব্যাকআপ'
     };
     document.getElementById('pageTitle').innerText = titles[tabName] || 'অ্যাডমিন প্যানেল';
 }
 
 async function loadDashboardData() {
-    // Fetch Products
+    // 1. Fetch Products
     const { data: prods } = await supabaseClient.from('products').select('*');
     adminProducts = prods || [];
 
-    // Fetch Orders
+    // 2. Fetch Orders
     const { data: ords } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
     adminOrders = ords || [];
 
-    // Calculate Stats
+    // 3. Fetch Expenses
+    try {
+        const { data: exps } = await supabaseClient.from('expenses').select('*').order('created_at', { ascending: false });
+        adminExpenses = exps || [];
+    } catch {
+        adminExpenses = [];
+    }
+
+    // Calculations
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todaySales = adminOrders
+        .filter(o => o.created_at && o.created_at.startsWith(todayStr))
+        .reduce((sum, o) => sum + (o.grand_total || 0), 0);
+
     const totalSales = adminOrders.reduce((sum, o) => sum + (o.grand_total || 0), 0);
     const pendingOrders = adminOrders.filter(o => o.status === 'Pending').length;
+    const processingOrders = adminOrders.filter(o => o.status === 'Processing' || o.status === 'Confirmed').length;
+    const deliveredOrders = adminOrders.filter(o => o.status === 'Delivered').length;
+    const lowStockCount = adminProducts.filter(p => (p.stock || 0) <= 5).length;
 
+    const totalExpenses = adminExpenses.reduce((sum, e) => sum + (e.amount || 0), 0);
+    const estProfit = Math.max(0, totalSales - totalExpenses);
+
+    const pendingCOD = adminOrders
+        .filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled')
+        .reduce((sum, o) => sum + (o.grand_total || 0), 0);
+
+    // Update Dashboard Metrics UI
+    document.getElementById('statTodaySales').innerText = `৳${todaySales.toLocaleString()}`;
     document.getElementById('statTotalSales').innerText = `৳${totalSales.toLocaleString()}`;
     document.getElementById('statTotalOrders').innerText = adminOrders.length;
     document.getElementById('statPendingOrders').innerText = pendingOrders;
+    document.getElementById('statProcessingOrders').innerText = processingOrders;
+    document.getElementById('statDeliveredOrders').innerText = deliveredOrders;
     document.getElementById('statTotalProducts').innerText = adminProducts.length;
+    document.getElementById('statLowStock').innerText = lowStockCount;
+    document.getElementById('statTotalExpenses').innerText = `৳${totalExpenses.toLocaleString()}`;
+    document.getElementById('statEstProfit').innerText = `৳${estProfit.toLocaleString()}`;
+    document.getElementById('statPendingCOD').innerText = `৳${pendingCOD.toLocaleString()}`;
 
+    // Render Sub-tables & Components
     renderAdminProducts();
     renderAdminOrders();
     renderAdminInventory();
+    renderRecentOrders();
+    renderLowStockTable();
+    renderCustomersTable();
+    renderExpensesTable();
+    renderCategories();
+    renderSalesAnalyticsChart();
+}
+
+function renderRecentOrders() {
+    const tbody = document.getElementById('recentOrdersTableBody');
+    if(!tbody) return;
+    const top5 = adminOrders.slice(0, 5);
+    if(top5.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-gray-400">কোন সাম্প্রতিক অর্ডার নেই</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = top5.map(o => `
+        <tr class="border-b">
+            <td class="p-2 font-bold text-leather-900">#${o.order_id}</td>
+            <td class="p-2">${o.customer_name}</td>
+            <td class="p-2 font-bold">৳${o.grand_total}</td>
+            <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">${o.status}</span></td>
+        </tr>
+    `).join('');
+}
+
+function renderLowStockTable() {
+    const tbody = document.getElementById('lowStockTableBody');
+    if(!tbody) return;
+    const lowProds = adminProducts.filter(p => (p.stock || 0) <= 5);
+    if(lowProds.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-gray-400">সকল পণ্যের স্টক পর্যাপ্ত রয়েছে</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = lowProds.map(p => `
+        <tr class="border-b">
+            <td class="p-2 font-bold truncate max-w-[120px]">${p.name}</td>
+            <td class="p-2 font-bold text-red-600">${p.stock} টি</td>
+            <td class="p-2 text-right"><button onclick="adjustStock(${p.id}, 10)" class="bg-gray-200 text-[10px] px-2 py-1 rounded font-bold">+১০</button></td>
+        </tr>
+    `).join('');
+}
+
+function renderSalesAnalyticsChart() {
+    const ctx = document.getElementById('salesAnalyticsChart');
+    if(!ctx) return;
+    
+    if(salesChartInstance) {
+        salesChartInstance.destroy();
+    }
+
+    const labels = ['৬ দিন আগে', '৫ দিন আগে', '৪ দিন আগে', '৩ দিন আগে', 'পরশু', 'গতকাল', 'আজ'];
+    const dataValues = [0, 0, 0, 0, 0, 0, 0];
+
+    // Dummy grouping for last 7 days visual chart
+    const totalSales = adminOrders.reduce((sum, o) => sum + (o.grand_total || 0), 0);
+    dataValues[6] = totalSales > 0 ? totalSales : 0;
+
+    salesChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'বিক্রয় (৳)',
+                data: dataValues,
+                borderColor: '#d4af37',
+                backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                fill: true,
+                tension: 0.3,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true },
+                x: { grid: { display: false } }
+            }
+        }
+    });
 }
 
 function renderAdminProducts() {
     const tbody = document.getElementById('adminProductTableBody');
+    if(!tbody) return;
     tbody.innerHTML = adminProducts.map(p => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 flex items-center gap-2">
@@ -109,6 +242,7 @@ function renderAdminProducts() {
 
 function renderAdminOrders() {
     const tbody = document.getElementById('adminOrderTableBody');
+    if(!tbody) return;
     tbody.innerHTML = adminOrders.map(o => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 font-bold text-leather-900">#${o.order_id}</td>
@@ -121,6 +255,7 @@ function renderAdminOrders() {
                 <select onchange="updateOrderStatus('${o.order_id}', this.value)" class="border rounded p-1 text-[11px] font-bold bg-white">
                     <option value="Pending" ${o.status==='Pending'?'selected':''}>Pending</option>
                     <option value="Confirmed" ${o.status==='Confirmed'?'selected':''}>Confirmed</option>
+                    <option value="Processing" ${o.status==='Processing'?'selected':''}>Processing</option>
                     <option value="Shipped" ${o.status==='Shipped'?'selected':''}>Shipped</option>
                     <option value="Delivered" ${o.status==='Delivered'?'selected':''}>Delivered</option>
                     <option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
@@ -135,6 +270,7 @@ function renderAdminOrders() {
 
 function renderAdminInventory() {
     const tbody = document.getElementById('adminInventoryTableBody');
+    if(!tbody) return;
     tbody.innerHTML = adminProducts.map(p => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 font-bold text-gray-900 truncate max-w-[130px] sm:max-w-none">${p.name}</td>
@@ -145,6 +281,68 @@ function renderAdminInventory() {
             </td>
         </tr>
     `).join('');
+}
+
+function renderCustomersTable() {
+    const tbody = document.getElementById('adminCustomerTableBody');
+    if(!tbody) return;
+    const uniqueCust = [];
+    const map = new Map();
+    for (const o of adminOrders) {
+        if(!map.has(o.customer_phone)){
+            map.set(o.customer_phone, true);
+            uniqueCust.push(o);
+        }
+    }
+    document.getElementById('statTotalCustomers').innerText = uniqueCust.length;
+
+    tbody.innerHTML = uniqueCust.map(c => `
+        <tr class="border-b">
+            <td class="p-3 font-bold">${c.customer_name}</td>
+            <td class="p-3">${c.customer_phone}</td>
+            <td class="p-3 text-xs text-gray-600 truncate max-w-[150px]">${c.customer_address}</td>
+            <td class="p-3 font-bold">${adminOrders.filter(o => o.customer_phone === c.customer_phone).length} টি</td>
+        </tr>
+    `).join('');
+}
+
+function renderExpensesTable() {
+    const tbody = document.getElementById('expenseTableBody');
+    if(!tbody) return;
+    tbody.innerHTML = adminExpenses.map(e => `
+        <tr class="border-b">
+            <td class="p-3 font-bold">${e.title}</td>
+            <td class="p-3 text-xs">${e.category}</td>
+            <td class="p-3 font-bold text-red-600">৳${e.amount}</td>
+            <td class="p-3 text-xs text-gray-500">${e.expense_date || '-'}</td>
+        </tr>
+    `).join('');
+}
+
+function renderCategories() {
+    const container = document.getElementById('categoryListContainer');
+    if(!container) return;
+    const cats = ['Short Wallet', 'Long Wallet', 'Card Holder', 'Shoes', 'Accessories'];
+    container.innerHTML = cats.map(c => `
+        <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-xl border text-xs">
+            <span class="font-bold text-gray-800">${c}</span>
+            <span class="bg-gold-500 text-leather-900 px-2 py-0.5 rounded font-extrabold text-[10px]">সক্রিয়</span>
+        </div>
+    `).join('');
+}
+
+function exportOrdersCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,Order ID,Name,Phone,Amount,Status\n";
+    adminOrders.forEach(o => {
+        csvContent += `${o.order_id},${o.customer_name},${o.customer_phone},${o.grand_total},${o.status}\n`;
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "ROVIX_Orders_Report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 async function updateOrderStatus(orderId, status) {
@@ -164,6 +362,11 @@ function openProductModal() {
     document.getElementById('editProductId').value = '';
     document.getElementById('productModalTitle').innerText = 'নতুন পণ্য যোগ করুন';
     document.getElementById('productModal').classList.remove('hidden');
+}
+
+function openExpenseModal() {
+    document.getElementById('expenseForm').reset();
+    document.getElementById('expenseModal').classList.remove('hidden');
 }
 
 async function saveProduct(e) {
@@ -186,6 +389,22 @@ async function saveProduct(e) {
     }
 
     closeModal('productModal');
+    loadDashboardData();
+}
+
+async function saveExpense(e) {
+    e.preventDefault();
+    const title = document.getElementById('expTitle').value;
+    const category = document.getElementById('expCategory').value;
+    const amount = parseFloat(document.getElementById('expAmount').value);
+
+    try {
+        await supabaseClient.from('expenses').insert([{ title, category, amount }]);
+    } catch {
+        adminExpenses.push({ title, category, amount, expense_date: new Date().toISOString().split('T')[0] });
+    }
+
+    closeModal('expenseModal');
     loadDashboardData();
 }
 
@@ -212,4 +431,63 @@ function editProduct(id) {
 
 function closeModal(id) {
     document.getElementById(id).classList.add('hidden');
+}
+
+function filterProductsTable() {
+    const query = document.getElementById('prodSearchInput').value.toLowerCase();
+    const cat = document.getElementById('prodCatFilter').value;
+    const filtered = adminProducts.filter(p => {
+        const matchesQuery = p.name.toLowerCase().includes(query);
+        const matchesCat = cat === 'all' || p.category === cat;
+        return matchesQuery && matchesCat;
+    });
+    const tbody = document.getElementById('adminProductTableBody');
+    tbody.innerHTML = filtered.map(p => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 flex items-center gap-2">
+                <img src="${p.image}" class="w-8 h-8 object-cover rounded border shrink-0">
+                <span class="font-bold text-gray-900 truncate max-w-[120px] sm:max-w-none">${p.name}</span>
+            </td>
+            <td class="p-3 font-semibold text-gray-600">${p.category}</td>
+            <td class="p-3 font-bold text-gray-900">৳${p.price}</td>
+            <td class="p-3 font-bold ${p.stock <= 5 ? 'text-red-600' : 'text-emerald-600'}">${p.stock} টি</td>
+            <td class="p-3 text-right space-x-1">
+                <button onclick="editProduct(${p.id})" class="text-blue-600 hover:text-blue-800 p-1"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-800 p-1"><i class="fa-solid fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterOrdersTable() {
+    const query = document.getElementById('orderSearchInput').value.toLowerCase();
+    const filtered = adminOrders.filter(o => 
+        o.order_id.toLowerCase().includes(query) || 
+        o.customer_phone.includes(query) ||
+        o.customer_name.toLowerCase().includes(query)
+    );
+    const tbody = document.getElementById('adminOrderTableBody');
+    tbody.innerHTML = filtered.map(o => `
+        <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 font-bold text-leather-900">#${o.order_id}</td>
+            <td class="p-3">
+                <p class="font-bold text-gray-900">${o.customer_name}</p>
+                <p class="text-gray-500 text-[11px]">${o.customer_phone}</p>
+            </td>
+            <td class="p-3 font-black text-gray-900">৳${o.grand_total}</td>
+            <td class="p-3">
+                <select onchange="updateOrderStatus('${o.order_id}', this.value)" class="border rounded p-1 text-[11px] font-bold bg-white">
+                    <option value="Pending" ${o.status==='Pending'?'selected':''}>Pending</option>
+                    <option value="Confirmed" ${o.status==='Confirmed'?'selected':''}>Confirmed</option>
+                    <option value="Processing" ${o.status==='Processing'?'selected':''}>Processing</option>
+                    <option value="Shipped" ${o.status==='Shipped'?'selected':''}>Shipped</option>
+                    <option value="Delivered" ${o.status==='Delivered'?'selected':''}>Delivered</option>
+                    <option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
+                </select>
+            </td>
+            <td class="p-3 text-right">
+                <a href="https://wa.me/88${o.customer_phone}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded text-[11px] font-bold"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+            </td>
+        </tr>
+    `).join('');
 }
