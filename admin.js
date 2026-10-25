@@ -1,8 +1,9 @@
-// Extended Admin Panel Controller Logic
+// Extended Admin Panel Controller Logic with Multi-Image Upload & Analytics
 let adminProducts = [];
 let adminOrders = [];
 let adminExpenses = [];
 let salesChartInstance = null;
+let uploadedImagesArray = [];
 
 window.onload = async function() {
     const { data: { session } } = await supabaseClient.auth.getSession();
@@ -189,8 +190,6 @@ function renderSalesAnalyticsChart() {
 
     const labels = ['৬ দিন আগে', '৫ দিন আগে', '৪ দিন আগে', '৩ দিন আগে', 'পরশু', 'গতকাল', 'আজ'];
     const dataValues = [0, 0, 0, 0, 0, 0, 0];
-
-    // Dummy grouping for last 7 days visual chart
     const totalSales = adminOrders.reduce((sum, o) => sum + (o.grand_total || 0), 0);
     dataValues[6] = totalSales > 0 ? totalSales : 0;
 
@@ -357,9 +356,40 @@ async function adjustStock(productId, amount) {
     loadDashboardData();
 }
 
+// Local File Upload Handler for Multiple Images
+function handleImageSelection(e) {
+    const files = e.target.files;
+    uploadedImagesArray = [];
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    previewContainer.innerHTML = '';
+
+    if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                const base64String = uploadEvent.target.result;
+                uploadedImagesArray.push(base64String);
+
+                const imgTag = document.createElement('img');
+                imgTag.src = base64String;
+                imgTag.className = "w-12 h-12 object-cover rounded border";
+                previewContainer.appendChild(imgTag);
+
+                if(i === 0) {
+                    document.getElementById('prodImage').value = base64String;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
 function openProductModal() {
     document.getElementById('productForm').reset();
     document.getElementById('editProductId').value = '';
+    document.getElementById('imagePreviewContainer').innerHTML = '';
+    uploadedImagesArray = [];
     document.getElementById('productModalTitle').innerText = 'নতুন পণ্য যোগ করুন';
     document.getElementById('productModal').classList.remove('hidden');
 }
@@ -377,8 +407,12 @@ async function saveProduct(e) {
     const price = parseFloat(document.getElementById('prodPrice').value);
     const original_price = parseFloat(document.getElementById('prodOrigPrice').value);
     const stock = parseInt(document.getElementById('prodStock').value);
-    const image = document.getElementById('prodImage').value;
+    let image = document.getElementById('prodImage').value;
     const description = document.getElementById('prodDesc').value;
+
+    if(uploadedImagesArray.length > 0) {
+        image = uploadedImagesArray[0];
+    }
 
     const payload = { name, category, price, original_price, stock, image, description };
 
@@ -425,6 +459,11 @@ function editProduct(id) {
     document.getElementById('prodStock').value = p.stock;
     document.getElementById('prodImage').value = p.image;
     document.getElementById('prodDesc').value = p.description || '';
+    
+    uploadedImagesArray = [];
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    previewContainer.innerHTML = p.image ? `<img src="${p.image}" class="w-12 h-12 object-cover rounded border">` : '';
+
     document.getElementById('productModalTitle').innerText = 'পণ্য সম্পাদনা করুন';
     document.getElementById('productModal').classList.remove('hidden');
 }
