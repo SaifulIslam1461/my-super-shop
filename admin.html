@@ -246,7 +246,7 @@
                 <!-- 4. ORDERS TAB -->
                 <div id="tab-orders" class="tab-content hidden space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between gap-3">
-                        <input type="text" id="orderSearchInput" onkeyup="filterOrdersTable()" placeholder="অর্ডার আইকন বা ফোন নম্বর দিয়ে খুঁজুন..." class="border rounded-xl p-2 text-xs bg-white w-full sm:w-64">
+                        <input type="text" id="orderSearchInput" onkeyup="filterOrdersTable()" placeholder="অর্ডার আইডি বা ফোন নম্বর দিয়ে খুঁজুন..." class="border rounded-xl p-2 text-xs bg-white w-full sm:w-64">
                         <button onclick="exportOrdersCSV()" class="bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-bold shadow hover:bg-emerald-800"><i class="fa-solid fa-file-excel mr-1"></i> CSV এক্সপোর্ট</button>
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
@@ -302,7 +302,7 @@
                 <div id="tab-payments" class="tab-content hidden space-y-4">
                     <h2 class="text-base font-bold text-gray-800">পেমেন্ট স্ট্যাটাস</h2>
                     <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2 text-xs">
-                        <p class="text-gray-600"><i class="fa-solid fa-circle-info text-gold-500 mr-1"></i> Cash on Delivery ডিফল্টভাবে সক্রিয় রয়েছে। বিকাশ/নগদ ম্যানুয়াল রিসিভ ভেরিফাই ব্যাকএন্ডে জমা হয়।</p>
+                        <p class="text-gray-600"><i class="fa-solid fa-circle-info text-gold-500 mr-1"></i> Cash on Delivery ডিফল্টভাবে সক্রিয় রয়েছে।</p>
                     </div>
                 </div>
 
@@ -402,7 +402,7 @@
         <button onclick="switchTab('inventory')" class="flex flex-col items-center gap-1"><i class="fa-solid fa-warehouse text-base"></i><span>স্টক</span></button>
     </div>
 
-    <!-- Product Add/Edit Modal -->
+    <!-- Product Add/Edit Modal (With Local File Multi-Image Upload Support) -->
     <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 hidden">
         <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="productModalTitle" class="font-bold text-base sm:text-lg">নতুন পণ্য যোগ করুন</h3>
@@ -425,7 +425,18 @@
                     <div><label class="block text-xs font-bold mb-1">বিক্রয়মূল্য (৳)</label><input type="number" id="prodPrice" required class="w-full border rounded-lg p-2 text-sm"></div>
                     <div><label class="block text-xs font-bold mb-1">আগের মূল্য (৳)</label><input type="number" id="prodOrigPrice" required class="w-full border rounded-lg p-2 text-sm"></div>
                 </div>
-                <div><label class="block text-xs font-bold mb-1">ছবির URL</label><input type="url" id="prodImage" required class="w-full border rounded-lg p-2 text-sm"></div>
+
+                <!-- Local File Upload for Multiple Images -->
+                <div>
+                    <label class="block text-xs font-bold mb-1">প্রোডাক্টের ছবি আপলোড করুন (একাধিক ছবি সিলেক্ট করা যাবে)</label>
+                    <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleImageSelection(event)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+                    <p class="text-[10px] text-gray-500 mt-1">অথবা নিচে সরাসরি ছবির URL দিতে পারেন:</p>
+                </div>
+                <div><input type="url" id="prodImage" placeholder="https://..." class="w-full border rounded-lg p-2 text-sm"></div>
+                
+                <!-- Image Preview Grid -->
+                <div id="imagePreviewContainer" class="flex gap-2 flex-wrap pt-1"></div>
+
                 <div><label class="block text-xs font-bold mb-1">বিবরণ</label><textarea id="prodDesc" class="w-full border rounded-lg p-2 text-sm" rows="2"></textarea></div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeModal('productModal')" class="bg-gray-200 px-4 py-2 rounded-lg text-xs font-bold">বাতিল</button>
