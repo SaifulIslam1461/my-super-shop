@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROVIX™ - Admin Dashboard</title>
-    <!-- Tailwind CSS -->
+    <title>ROVIX™ - Advanced Admin Panel</title>
+    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Supabase JS Client -->
+    <!-- Supabase & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body class="bg-gray-100 font-sans min-h-screen pb-16 md:pb-0">
@@ -21,7 +21,7 @@
             <div class="text-center space-y-2">
                 <div class="w-12 h-12 bg-leather-900 text-gold-400 rounded-xl mx-auto flex items-center justify-center font-black text-2xl">R</div>
                 <h2 class="text-2xl font-black text-gray-900">ROVIX Admin Panel</h2>
-                <p class="text-xs text-gray-500">আপনার অ্যাডমিন ক্রেন্ডেনসিয়াল দিয়ে লগইন করুন</p>
+                <p class="text-xs text-gray-500">নিরাপদ লগইন সম্পন্ন করুন</p>
             </div>
             <form id="loginForm" onsubmit="handleAdminLogin(event)" class="space-y-4">
                 <div>
@@ -37,10 +37,10 @@
         </div>
     </div>
 
-    <!-- Main Admin Dashboard Layout -->
+    <!-- Main Admin App Layout -->
     <div id="dashboardApp" class="hidden flex flex-col md:flex-row min-h-screen overflow-x-hidden">
         
-        <!-- Mobile Navigation Header -->
+        <!-- Mobile Header -->
         <div class="md:hidden bg-leather-900 text-white p-4 flex items-center justify-between sticky top-0 z-40 border-b border-leather-800 shadow-md">
             <div class="flex items-center gap-2">
                 <button onclick="toggleMobileSidebar()" class="text-gold-400 text-xl p-1"><i class="fa-solid fa-bars"></i></button>
@@ -49,32 +49,43 @@
             <button onclick="handleLogout()" class="text-red-400 text-sm"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
 
-        <!-- Sidebar Overlay (For Mobile) -->
         <div id="sidebarOverlay" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/60 z-40 md:hidden"></div>
 
-        <!-- Sidebar Navigation -->
+        <!-- Comprehensive 18-Item Sidebar -->
         <aside id="adminSidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-leather-900 text-white flex flex-col justify-between z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
-            <div>
+            <div class="flex-1 overflow-y-auto">
                 <div class="h-16 md:h-20 flex items-center justify-between px-6 border-b border-leather-800">
                     <span class="text-xl font-black tracking-widest text-white">ROVIX <span class="text-gold-500 text-xs">ADMIN</span></span>
                     <button onclick="toggleMobileSidebar()" class="md:hidden text-gray-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <nav class="p-4 space-y-1.5 text-sm">
-                    <button onclick="switchTab('dashboard')" class="tab-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-leather-800 text-gold-400 font-bold transition"><i class="fa-solid fa-chart-pie w-5"></i> ড্যাশবোর্ড</button>
-                    <button onclick="switchTab('products')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-box w-5"></i> পণ্য ব্যবস্থাপনা</button>
-                    <button onclick="switchTab('orders')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-bag-shopping w-5"></i> অর্ডারসমূহ</button>
-                    <button onclick="switchTab('inventory')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-warehouse w-5"></i> ইনভেন্টরি স্টক</button>
-                    <button onclick="switchTab('settings')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-gear w-5"></i> সেটিংস</button>
+                <nav class="p-3 space-y-1 text-xs sm:text-sm">
+                    <button onclick="switchTab('dashboard')" class="tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-leather-800 text-gold-400 font-bold transition"><i class="fa-solid fa-chart-pie w-5"></i> ড্যাশবোর্ড</button>
+                    <button onclick="switchTab('products')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-box w-5"></i> পণ্য ব্যবস্থাপনা</button>
+                    <button onclick="switchTab('categories')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-layer-group w-5"></i> ক্যাটাগরি</button>
+                    <button onclick="switchTab('orders')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-bag-shopping w-5"></i> অর্ডারসমূহ</button>
+                    <button onclick="switchTab('customers')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-users w-5"></i> কাস্টমার তালিকা</button>
+                    <button onclick="switchTab('inventory')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-warehouse w-5"></i> ইনভেন্টরি স্টক</button>
+                    <button onclick="switchTab('coupons')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-ticket w-5"></i> কুপন ও অফার</button>
+                    <button onclick="switchTab('payments')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-credit-card w-5"></i> পেমেন্ট ট্র্যাকিং</button>
+                    <button onclick="switchTab('courier')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-truck-fast w-5"></i> কুরিয়ার ও শিপিং</button>
+                    <button onclick="switchTab('expenses')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i> খরচ ও বাজেট</button>
+                    <button onclick="switchTab('reports')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-chart-line w-5"></i> সেলস রিপোর্টস</button>
+                    <button onclick="switchTab('content')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-globe w-5"></i> ওয়েবসাইট কনটেন্ট</button>
+                    <button onclick="switchTab('notifications')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-bell w-5"></i> নোটিফিকেশন</button>
+                    <button onclick="switchTab('seo')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-magnifying-glass-chart w-5"></i> SEO সেটিংস</button>
+                    <button onclick="switchTab('permissions')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-user-shield w-5"></i> অ্যাডমিন পারমিশন</button>
+                    <button onclick="switchTab('settings')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-gear w-5"></i> জেনারেল সেটিংস</button>
+                    <button onclick="switchTab('backup')" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-leather-800/50 text-gray-300 font-medium transition"><i class="fa-solid fa-shield-halved w-5"></i> ব্যাকআপ ও সিকিউরিটি</button>
                 </nav>
             </div>
             <div class="p-4 border-t border-leather-800">
-                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white py-2.5 rounded-xl text-xs font-bold transition">
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white py-2 rounded-xl text-xs font-bold transition">
                     <i class="fa-solid fa-right-from-bracket"></i> লগআউট
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Content Body -->
         <div class="flex-1 flex flex-col min-w-0">
             <header class="hidden md:flex h-20 bg-white border-b items-center justify-between px-6 shadow-sm">
                 <h1 id="pageTitle" class="text-xl font-bold text-gray-800">ড্যাশবোর্ড ওভারভিউ</h1>
@@ -82,36 +93,138 @@
             </header>
 
             <main class="p-4 sm:p-6 space-y-6">
-                <!-- Dashboard Tab -->
+                
+                <!-- 1. DASHBOARD OVERVIEW TAB -->
                 <div id="tab-dashboard" class="tab-content space-y-6">
+                    
+                    <!-- Comprehensive Metric Grid -->
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg sm:text-xl font-bold shrink-0"><i class="fa-solid fa-bangladeshi-taka-sign"></i></div>
-                            <div class="min-w-0"><p class="text-[11px] sm:text-xs text-gray-500 font-medium truncate">মোট বিক্রয়</p><h3 id="statTotalSales" class="text-base sm:text-xl font-black text-gray-900 mt-0.5">৳০</h3></div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-bangladeshi-taka-sign"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">আজকের বিক্রয়</p><h3 id="statTodaySales" class="text-base font-black text-gray-900 mt-0.5">৳০</h3></div>
                         </div>
-                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg sm:text-xl font-bold shrink-0"><i class="fa-solid fa-bag-shopping"></i></div>
-                            <div class="min-w-0"><p class="text-[11px] sm:text-xs text-gray-500 font-medium truncate">মোট অর্ডার</p><h3 id="statTotalOrders" class="text-base sm:text-xl font-black text-gray-900 mt-0.5">০</h3></div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-wallet"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">মোট বিক্রয়</p><h3 id="statTotalSales" class="text-base font-black text-gray-900 mt-0.5">৳০</h3></div>
                         </div>
-                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg sm:text-xl font-bold shrink-0"><i class="fa-solid fa-clock"></i></div>
-                            <div class="min-w-0"><p class="text-[11px] sm:text-xs text-gray-500 font-medium truncate">নতুন অর্ডার</p><h3 id="statPendingOrders" class="text-base sm:text-xl font-black text-gray-900 mt-0.5">০</h3></div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-bag-shopping"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">মোট অর্ডার</p><h3 id="statTotalOrders" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
                         </div>
-                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg sm:text-xl font-bold shrink-0"><i class="fa-solid fa-boxes-stacked"></i></div>
-                            <div class="min-w-0"><p class="text-[11px] sm:text-xs text-gray-500 font-medium truncate">মোট পণ্য</p><h3 id="statTotalProducts" class="text-base sm:text-xl font-black text-gray-900 mt-0.5">০</h3></div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-clock"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">নতুন অর্ডার (Pending)</p><h3 id="statPendingOrders" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">Processing Orders</p><h3 id="statProcessingOrders" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">Delivered Orders</p><h3 id="statDeliveredOrders" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">মোট পণ্য</p><h3 id="statTotalProducts" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">Low Stock Products</p><h3 id="statLowStock" class="text-base font-black text-red-600 mt-0.5">০</h3></div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-users"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">মোট কাস্টমার</p><h3 id="statTotalCustomers" class="text-base font-black text-gray-900 mt-0.5">০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">মোট খরচ</p><h3 id="statTotalExpenses" class="text-base font-black text-gray-900 mt-0.5">৳০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-chart-line"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">আনুমানিক লাভ</p><h3 id="statEstProfit" class="text-base font-black text-emerald-600 mt-0.5">৳০</h3></div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-lg font-bold shrink-0"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div class="min-w-0"><p class="text-[11px] text-gray-500 font-medium truncate">বকেয়া COD টাকা</p><h3 id="statPendingCOD" class="text-base font-black text-amber-700 mt-0.5">৳০</h3></div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Widget Bar -->
+                    <div class="bg-leather-900 p-4 rounded-2xl shadow-md text-white">
+                        <h4 class="text-xs font-bold text-gold-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-bolt mr-1"></i> Quick Actions</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <button onclick="openProductModal()" class="bg-leather-800 hover:bg-leather-700 p-2.5 rounded-xl border border-leather-700 text-left font-semibold flex items-center gap-2"><i class="fa-solid fa-plus text-gold-400"></i> নতুন পণ্য</button>
+                            <button onclick="switchTab('orders')" class="bg-leather-800 hover:bg-leather-700 p-2.5 rounded-xl border border-leather-700 text-left font-semibold flex items-center gap-2"><i class="fa-solid fa-list-check text-gold-400"></i> অর্ডারসমূহ</button>
+                            <button onclick="switchTab('inventory')" class="bg-leather-800 hover:bg-leather-700 p-2.5 rounded-xl border border-leather-700 text-left font-semibold flex items-center gap-2"><i class="fa-solid fa-boxes-packing text-gold-400"></i> স্টক চেক</button>
+                            <button onclick="switchTab('expenses')" class="bg-leather-800 hover:bg-leather-700 p-2.5 rounded-xl border border-leather-700 text-left font-semibold flex items-center gap-2"><i class="fa-solid fa-receipt text-gold-400"></i> খরচ যোগ করুন</button>
+                        </div>
+                    </div>
+
+                    <!-- Sales Analytics Graph Container -->
+                    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-bold text-gray-800">বিক্রয় এনালিটিক্স চার্ট (Sales Analytics)</h3>
+                            <span class="text-[10px] bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold">গত ৭ দিন</span>
+                        </div>
+                        <div class="relative h-60 w-full">
+                            <canvas id="salesAnalyticsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders & Low Stock Tables Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-sm font-bold text-gray-800">সর্বশেষ ৫টি অর্ডার</h3>
+                                <button onclick="switchTab('orders')" class="text-xs text-gold-600 font-bold hover:underline">সবগুলো দেখুন</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs min-w-[300px]">
+                                    <thead class="bg-gray-50 border-b">
+                                        <tr><th class="p-2">আইডি</th><th class="p-2">গ্রাহক</th><th class="p-2">টাকা</th><th class="p-2">স্ট্যাটাস</th></tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-sm font-bold text-red-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i> স্টক শেষ হওয়ার কাছাকাছি</h3>
+                                <button onclick="switchTab('inventory')" class="text-xs text-gold-600 font-bold hover:underline">স্টক ঠিক করুন</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs min-w-[300px]">
+                                    <thead class="bg-gray-50 border-b">
+                                        <tr><th class="p-2">পণ্য</th><th class="p-2">স্টক</th><th class="p-2 text-right">অ্যাকশন</th></tr>
+                                    </thead>
+                                    <tbody id="lowStockTableBody"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Products Tab -->
+                <!-- 2. PRODUCTS TAB -->
                 <div id="tab-products" class="tab-content hidden space-y-4">
-                    <div class="flex flex-row justify-between items-center gap-2">
-                        <h2 class="text-base sm:text-lg font-bold text-gray-800">পণ্য তালিকা</h2>
-                        <button onclick="openProductModal()" class="bg-leather-900 text-gold-400 px-3.5 py-2 rounded-xl text-xs font-bold shadow hover:bg-leather-800 transition"><i class="fa-solid fa-plus mr-1"></i> নতুন পণ্য</button>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex gap-2">
+                            <input type="text" id="prodSearchInput" onkeyup="filterProductsTable()" placeholder="পণ্য খুঁজুন..." class="border rounded-xl p-2 text-xs bg-white w-48 outline-none focus:ring-1 focus:ring-gold-500">
+                            <select id="prodCatFilter" onchange="filterProductsTable()" class="border rounded-xl p-2 text-xs bg-white outline-none">
+                                <option value="all">সকল ক্যাটাগরি</option>
+                                <option value="short-wallet">Short Wallet</option>
+                                <option value="long-wallet">Long Wallet</option>
+                                <option value="card-holder">Card Holder</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="accessories">Accessories</option>
+                            </select>
+                        </div>
+                        <button onclick="openProductModal()" class="bg-leather-900 text-gold-400 px-4 py-2 rounded-xl text-xs font-bold shadow hover:bg-leather-800 transition"><i class="fa-solid fa-plus mr-1"></i> নতুন পণ্য যোগ করুন</button>
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
-                        <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
+                        <table class="w-full text-left text-xs sm:text-sm min-w-[550px]">
                             <thead class="bg-gray-50 text-gray-700 border-b">
                                 <tr>
                                     <th class="p-3">পণ্য</th><th class="p-3">ক্যাটাগরি</th><th class="p-3">মূল্য</th><th class="p-3">স্টক</th><th class="p-3 text-right">অ্যাকশন</th>
@@ -122,11 +235,22 @@
                     </div>
                 </div>
 
-                <!-- Orders Tab -->
+                <!-- 3. CATEGORIES TAB -->
+                <div id="tab-categories" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">ক্যাটাগরি ম্যানেজমেন্ট</h2>
+                    <div class="bg-white rounded-2xl p-4 border shadow-sm max-w-md">
+                        <div class="space-y-3" id="categoryListContainer"></div>
+                    </div>
+                </div>
+
+                <!-- 4. ORDERS TAB -->
                 <div id="tab-orders" class="tab-content hidden space-y-4">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-800">অর্ডারসমূহ</h2>
+                    <div class="flex flex-col sm:flex-row justify-between gap-3">
+                        <input type="text" id="orderSearchInput" onkeyup="filterOrdersTable()" placeholder="অর্ডার আইকন বা ফোন নম্বর দিয়ে খুঁজুন..." class="border rounded-xl p-2 text-xs bg-white w-full sm:w-64">
+                        <button onclick="exportOrdersCSV()" class="bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-bold shadow hover:bg-emerald-800"><i class="fa-solid fa-file-excel mr-1"></i> CSV এক্সপোর্ট</button>
+                    </div>
                     <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
-                        <table class="w-full text-left text-xs sm:text-sm min-w-[600px]">
+                        <table class="w-full text-left text-xs sm:text-sm min-w-[650px]">
                             <thead class="bg-gray-50 text-gray-700 border-b">
                                 <tr>
                                     <th class="p-3">আইডি</th><th class="p-3">গ্রাহক</th><th class="p-3">টাকা</th><th class="p-3">স্ট্যাটাস</th><th class="p-3 text-right">অ্যাকশন</th>
@@ -137,31 +261,135 @@
                     </div>
                 </div>
 
-                <!-- Inventory Tab -->
-                <div id="tab-inventory" class="tab-content hidden space-y-4">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-800">ইনভেন্টরি</h2>
+                <!-- 5. CUSTOMERS TAB -->
+                <div id="tab-customers" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">কাস্টমার প্রোফাইল তালিকা</h2>
                     <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
                         <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
                             <thead class="bg-gray-50 text-gray-700 border-b">
-                                <tr>
-                                    <th class="p-3">নাম</th><th class="p-3">স্টক</th><th class="p-3">অবস্থা</th><th class="p-3 text-right">আপডেট</th>
-                                </tr>
+                                <tr><th class="p-3">নাম</th><th class="p-3">ফোন</th><th class="p-3">ঠিকানা</th><th class="p-3">মোট অর্ডার</th></tr>
+                            </thead>
+                            <tbody id="adminCustomerTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6. INVENTORY TAB -->
+                <div id="tab-inventory" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">ইনভেন্টরি ও স্টক ট্র্যাক</h2>
+                    <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
+                            <thead class="bg-gray-50 text-gray-700 border-b">
+                                <tr><th class="p-3">নাম</th><th class="p-3">স্টক</th><th class="p-3">অবস্থা</th><th class="p-3 text-right">স্টক অ্যাডজাস্ট</th></tr>
                             </thead>
                             <tbody id="adminInventoryTableBody"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Settings Tab -->
+                <!-- 7. COUPONS TAB -->
+                <div id="tab-coupons" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">কুপন ও ছাড়</h2>
+                    <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3 max-w-md">
+                        <div class="p-3 bg-leather-50 rounded-xl border text-xs">
+                            <p class="font-bold text-leather-900">কুপন কোড: ROVIX100</p>
+                            <p class="text-gray-600">১০০৳ ছাড় (সক্রিয়)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. PAYMENTS TAB -->
+                <div id="tab-payments" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">পেমেন্ট স্ট্যাটাস</h2>
+                    <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2 text-xs">
+                        <p class="text-gray-600"><i class="fa-solid fa-circle-info text-gold-500 mr-1"></i> Cash on Delivery ডিফল্টভাবে সক্রিয় রয়েছে। বিকাশ/নগদ ম্যানুয়াল রিসিভ ভেরিফাই ব্যাকএন্ডে জমা হয়।</p>
+                    </div>
+                </div>
+
+                <!-- 9. COURIER TAB -->
+                <div id="tab-courier" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">কুরিয়ার ও শিপিং সেটআপ</h2>
+                    <div class="bg-white p-4 rounded-2xl border shadow-sm text-xs space-y-2">
+                        <span class="bg-amber-100 text-amber-800 font-bold px-2 py-1 rounded">Steadfast API Ready</span>
+                        <p class="text-gray-600">কুরিয়ার ট্র্যাকিং ও অটো বুকিং পারমিশন ব্যাকএন্ড থেকে রেডি রাখা হয়েছে।</p>
+                    </div>
+                </div>
+
+                <!-- 10. EXPENSES TAB -->
+                <div id="tab-expenses" class="tab-content hidden space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-base font-bold text-gray-800">ব্যবসায়িক খরচ রেজিস্টার</h2>
+                        <button onclick="openExpenseModal()" class="bg-leather-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-bold">+ খরচ যোগ করুন</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
+                        <table class="w-full text-left text-xs min-w-[450px]">
+                            <thead class="bg-gray-50 border-b">
+                                <tr><th class="p-3">খাত</th><th class="p-3">ক্যাটাগরি</th><th class="p-3">পরিমাণ</th><th class="p-3">তারিখ</th></tr>
+                            </thead>
+                            <tbody id="expenseTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 11. REPORTS TAB -->
+                <div id="tab-reports" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">সেলস ও ব্যবসায়িক রিপোর্ট</h2>
+                    <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-3">
+                        <button onclick="window.print()" class="bg-leather-900 text-gold-400 px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-print mr-1"></i> ড্যাশবোর্ড রিপোর্ট প্রিন্ট করুন</button>
+                    </div>
+                </div>
+
+                <!-- 12. CONTENT TAB -->
+                <div id="tab-content" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">ওয়েবসাইট কনটেন্ট আপডেট</h2>
+                    <p class="text-xs text-gray-500">জেনারেল সেটিংস মেনু থেকে হেডারের নোটিশ ও ব্যানার মেসেজ দ্রুত পরিমার্জন করা যাবে।</p>
+                </div>
+
+                <!-- 13. NOTIFICATIONS TAB -->
+                <div id="tab-notifications" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">সিস্টেম নোটিফিকেশন</h2>
+                    <div class="bg-white p-4 rounded-2xl border text-xs space-y-2">
+                        <p class="text-emerald-700 font-semibold"><i class="fa-solid fa-check-circle"></i> নতুন কোনো পেন্ডিং সিস্টেম সমস্যা নেই।</p>
+                    </div>
+                </div>
+
+                <!-- 14. SEO TAB -->
+                <div id="tab-seo" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">SEO সেটিংস</h2>
+                    <div class="bg-white p-4 rounded-2xl border text-xs space-y-2">
+                        <p><strong>Meta Title:</strong> ROVIX™ - Premium Genuine Leather Goods Bangladesh</p>
+                        <p><strong>Meta Description:</strong> আসল চামড়া, আসল অনুভব— একবার ছুঁলেই বুঝবেন!</p>
+                    </div>
+                </div>
+
+                <!-- 15. PERMISSIONS TAB -->
+                <div id="tab-permissions" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">অ্যাডমিন রোল ও পারমিশন</h2>
+                    <div class="bg-white p-4 rounded-2xl border text-xs">
+                        <p class="font-bold">সক্রিয় সুপার অ্যাডমিন:</p>
+                        <p class="text-gray-600" id="permEmail">admin@rovix.com</p>
+                    </div>
+                </div>
+
+                <!-- 16. GENERAL SETTINGS TAB -->
                 <div id="tab-settings" class="tab-content hidden space-y-4">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-800">সেটিংস</h2>
+                    <h2 class="text-base font-bold text-gray-800">সেটিংস</h2>
                     <form id="settingsForm" onsubmit="saveSettings(event)" class="bg-white rounded-2xl shadow-sm border p-4 sm:p-6 space-y-4 max-w-xl">
-                        <div><label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম</label><input type="text" id="settingBrand" class="w-full border rounded-lg p-2.5 text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">ফোন নম্বর</label><input type="text" id="settingPhone" class="w-full border rounded-lg p-2.5 text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">হোয়াটসঅ্যাপ নম্বর</label><input type="text" id="settingWhatsapp" class="w-full border rounded-lg p-2.5 text-sm"></div>
-                        <button type="submit" class="bg-leather-900 text-gold-400 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm">সেভ করুন</button>
+                        <div><label class="block text-xs font-bold mb-1">ব্র্যান্ড নাম</label><input type="text" id="settingBrand" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                        <div><label class="block text-xs font-bold mb-1">ফোন নম্বর</label><input type="text" id="settingPhone" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                        <div><label class="block text-xs font-bold mb-1">হোয়াটসঅ্যাপ নম্বর</label><input type="text" id="settingWhatsapp" class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                        <button type="submit" class="bg-leather-900 text-gold-400 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow">সেভ করুন</button>
                     </form>
                 </div>
+
+                <!-- 17. BACKUP & SECURITY TAB -->
+                <div id="tab-backup" class="tab-content hidden space-y-4">
+                    <h2 class="text-base font-bold text-gray-800">ডাটাবেস ব্যাকআপ ও সিকিউরিটি</h2>
+                    <div class="bg-white p-4 rounded-2xl border shadow-sm text-xs space-y-3">
+                        <p class="text-gray-600">Supabase Row Level Security (RLS) সুরক্ষিত অবস্থায় ডাটাবেস ব্যাকআপ সক্রিয় রয়েছে।</p>
+                    </div>
+                </div>
+
             </main>
         </div>
     </div>
@@ -174,7 +402,7 @@
         <button onclick="switchTab('inventory')" class="flex flex-col items-center gap-1"><i class="fa-solid fa-warehouse text-base"></i><span>স্টক</span></button>
     </div>
 
-    <!-- Product Modal (Add/Edit) -->
+    <!-- Product Add/Edit Modal -->
     <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 hidden">
         <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="productModalTitle" class="font-bold text-base sm:text-lg">নতুন পণ্য যোগ করুন</h3>
@@ -202,6 +430,30 @@
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeModal('productModal')" class="bg-gray-200 px-4 py-2 rounded-lg text-xs font-bold">বাতিল</button>
                     <button type="submit" class="bg-leather-900 text-gold-400 px-5 py-2 rounded-lg text-xs font-bold">সেভ করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl space-y-3">
+            <h3 class="font-bold text-base">নতুন খরচ এনট্রি করুন</h3>
+            <form id="expenseForm" onsubmit="saveExpense(event)" class="space-y-3">
+                <div><label class="block text-xs font-bold mb-1">খাতের নাম</label><input type="text" id="expTitle" required placeholder="উদাহরণ: Facebook Ad Cost" class="w-full border rounded-lg p-2 text-sm"></div>
+                <div><label class="block text-xs font-bold mb-1">ক্যাটাগরি</label>
+                    <select id="expCategory" class="w-full border rounded-lg p-2 text-sm bg-white">
+                        <option value="Purchase">Product Purchase</option>
+                        <option value="Marketing">Marketing / Boosting</option>
+                        <option value="Courier">Courier Cost</option>
+                        <option value="Packaging">Packaging</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div><label class="block text-xs font-bold mb-1">টাকার পরিমাণ (৳)</label><input type="number" id="expAmount" required class="w-full border rounded-lg p-2 text-sm"></div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('expenseModal')" class="bg-gray-200 px-4 py-2 rounded-lg text-xs font-bold">বাতিল</button>
+                    <button type="submit" class="bg-leather-900 text-gold-400 px-5 py-2 rounded-lg text-xs font-bold">যোগ করুন</button>
                 </div>
             </form>
         </div>
