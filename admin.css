@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    background-color: #f3f4f6;
+}
+
+.leather-900 { background-color: #1a0f0a; }
+.leather-800 { background-color: #381b07; }
+.gold-400 { color: #f3e5ab; }
+.gold-500 { color: #d4af37; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 4px;
+}
