@@ -248,7 +248,7 @@ function populateCategoryDropdowns() {
     }
 }
 
-// Save Settings Function (Handles WhatsApp, Facebook, YouTube, Location properly for website sync)
+// Save Settings Function
 async function saveSettings(e) {
     e.preventDefault();
     const brand_name = document.getElementById('settingBrand').value;
@@ -541,17 +541,18 @@ function openExpenseModal() {
     document.getElementById('expenseModal').classList.remove('hidden');
 }
 
+// FIXED & SECURED saveProduct Function for Supabase
 async function saveProduct(e) {
     e.preventDefault();
     const id = document.getElementById('editProductId').value;
     const name = document.getElementById('prodName').value;
     const category = document.getElementById('prodCategory').value;
-    const price = parseFloat(document.getElementById('prodPrice').value);
-    const original_price = parseFloat(document.getElementById('prodOrigPrice').value);
-    const stock = parseInt(document.getElementById('prodStock').value);
-    let image = document.getElementById('prodImage').value;
-    const video_url = document.getElementById('prodVideoUrl').value;
-    const description = document.getElementById('prodDesc').value;
+    const price = parseFloat(document.getElementById('prodPrice').value) || 0;
+    const original_price = parseFloat(document.getElementById('prodOrigPrice').value) || 0;
+    const stock = parseInt(document.getElementById('prodStock').value) || 0;
+    let image = document.getElementById('prodImage').value || 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80';
+    const video_url = document.getElementById('prodVideoUrl').value || '';
+    const description = document.getElementById('prodDesc').value || '';
 
     if(uploadedImagesArray.length > 0) {
         image = uploadedImagesArray[0];
@@ -559,14 +560,25 @@ async function saveProduct(e) {
 
     const payload = { name, category, price, original_price, stock, image, video_url, description };
 
-    if(id) {
-        await supabaseClient.from('products').update(payload).eq('id', id);
-    } else {
-        await supabaseClient.from('products').insert([payload]);
-    }
+    try {
+        let error;
+        if(id) {
+            const res = await supabaseClient.from('products').update(payload).eq('id', id);
+            error = res.error;
+        } else {
+            const res = await supabaseClient.from('products').insert([payload]);
+            error = res.error;
+        }
 
-    closeModal('productModal');
-    loadDashboardData();
+        if(error) throw error;
+
+        alert(id ? 'পণ্য সফলভাবে আপডেট করা হয়েছে!' : 'নতুন পণ্য সফলভাবে যোগ করা হয়েছে!');
+        closeModal('productModal');
+        loadDashboardData();
+    } catch (err) {
+        alert('পণ্য সেভ করতে সমস্যা হয়েছে: ' + err.message);
+        console.error("Product Save Error:", err);
+    }
 }
 
 async function saveExpense(e) {
