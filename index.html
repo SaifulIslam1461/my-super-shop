@@ -861,9 +861,9 @@
         </div>
     </footer>
 
-    <!-- Fixed Floating WhatsApp Quick Action Button (Fixed & Working) -->
-    <div class="fixed bottom-4 right-4 z-40 sm:hidden flex flex-col gap-2">
-        <a id="whatsappBtn" href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white">
+    <!-- Fixed Floating WhatsApp Quick Action Button (Fixed & Dynamic) -->
+    <div class="fixed bottom-4 right-4 z-40 sm:flex flex-col gap-2">
+        <a id="whatsappBtn" href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white hover:scale-110 transition">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
     </div>
@@ -883,7 +883,7 @@
             updateCartUI();
         };
 
-        // Apply Dynamic Settings & Links from Admin/DB
+        // Apply Dynamic Settings, Social Links, and Clean WhatsApp Number Format
         function applySettings() {
             if(storeSettings.brand_name) {
                 document.getElementById('brandName').innerHTML = storeSettings.brand_name.replace('™', '<span class="text-gold-500">™</span>');
@@ -897,8 +897,8 @@
                 document.getElementById('footerPhone').innerHTML = `<i class="fa-solid fa-phone text-gold-500 mr-2"></i>${storeSettings.phone}`;
                 document.getElementById('footerPhone').href = `tel:${storeSettings.phone}`;
             }
+            // Fix WhatsApp: Removes any extra characters (+, spaces, hyphens) and maps safely to wa.me
             if(storeSettings.whatsapp) {
-                // Ensures WhatsApp number formats correctly for chat URL
                 let cleanWa = storeSettings.whatsapp.replace(/[^0-9]/g, '');
                 document.getElementById('whatsappBtn').href = `https://wa.me/${cleanWa}`;
             }
@@ -1209,7 +1209,7 @@
         }
 
         function showToast(msg) {
-            const toast = document.getElementById('toast');
+            const toy = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
             toast.classList.remove('opacity-0', 'translate-y-20');
             setTimeout(() => {
