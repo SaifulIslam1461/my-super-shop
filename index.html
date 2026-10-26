@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font: Hind Siliguri & Inter -->
+    <!-- Google Font: Hind Siliguri & Inter (Optimized Load) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -64,7 +64,6 @@
         .leather-gradient {
             background: linear-gradient(135deg, #1a0f0a 0%, #381b07 100%);
         }
-        /* Custom Keyframe Animations */
         @keyframes ticker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -88,7 +87,7 @@
             <span><i class="fa-solid fa-truck-fast text-gold-500 mr-1"></i> ক্যাশ অন ডেলিভারি</span>
         </div>
         <div id="announcementText" class="w-full sm:w-auto text-center font-semibold tracking-wide">
-            🔥 সারাদেশ জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+ | সারাদেশে ক্যাশ অন ডেলিভারি এভেলেবল!
+            🔥 সারাদেশে জুড়ে ফ্রি শিপিং অর্ডার ৩,০০০৳+ | সারাদেশে ক্যাশ অন ডেলিভারি এভেলেবল!
         </div>
         <div class="hidden sm:flex items-center gap-3 text-xs">
             <a id="headerPhone" href="tel:+8801700000000" class="hover:text-gold-500 transition"><i class="fa-solid fa-phone mr-1"></i> 01700-000000</a>
@@ -121,27 +120,21 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     
-                    <!-- Quick Live Search Dropdown -->
-                    <div id="searchDropdown" class="hidden absolute left-0 right-0 top-12 bg-leather-900 border border-leather-700 rounded-xl shadow-2xl p-2 z-50 max-h-80 overflow-y-auto">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div id="searchDropdown" class="hidden absolute left-0 right-0 top-12 bg-leather-900 border border-leather-700 rounded-xl shadow-2xl p-2 z-50 max-h-80 overflow-y-auto"></div>
                 </div>
 
                 <!-- Navigation Actions -->
                 <div class="flex items-center gap-3 sm:gap-5">
-                    <!-- Track Order Button -->
                     <button onclick="openModal('trackModal')" class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-amber-200 hover:text-gold-400 bg-leather-800/60 hover:bg-leather-800 px-3 py-2 rounded-lg border border-leather-700 transition">
                         <i class="fa-solid fa-truck-ramp-box text-gold-500"></i>
                         <span>অর্ডার ট্র্যাক</span>
                     </button>
 
-                    <!-- Wishlist Button -->
                     <button onclick="showToast('উইশলিস্টে আপডেট করা হয়েছে!')" class="relative p-2 text-gray-300 hover:text-gold-400 transition">
                         <i class="fa-regular fa-heart text-xl"></i>
                         <span id="wishlistCount" class="absolute -top-1 -right-1 bg-gold-500 text-leather-900 font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
 
-                    <!-- Cart Drawer Trigger Button -->
                     <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-leather-900 px-4 py-2 rounded-full font-bold text-sm shadow-lg hover:shadow-gold-500/20 transition transform active:scale-95">
                         <i class="fa-solid fa-bag-shopping text-base"></i>
                         <span class="hidden sm:inline">কার্ট</span>
@@ -193,7 +186,6 @@
                             </button>
                         </div>
 
-                        <!-- Trust Badge Grid -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-leather-800">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-full bg-leather-800 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0">
@@ -234,7 +226,6 @@
                         </div>
                     </div>
 
-                    <!-- Hero Visual Showcase Card -->
                     <div class="lg:col-span-5 relative">
                         <div class="relative mx-auto max-w-md lg:max-w-none">
                             <div class="absolute -inset-1 gold-gradient rounded-3xl blur opacity-30 animate-pulse"></div>
@@ -242,7 +233,7 @@
                                 <div class="absolute top-4 right-4 bg-red-600 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest shadow">
                                     ৩০% ছাড়!
                                 </div>
-                                <img id="heroProductImage" src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80" alt="Rovix Premium Leather Wallet" class="w-full h-72 sm:h-80 object-cover rounded-2xl shadow-md transition duration-500 hover:scale-105">
+                                <img id="heroProductImage" src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80" alt="Rovix Premium Leather Wallet" class="w-full h-72 sm:h-80 object-cover rounded-2xl shadow-md transition duration-500 hover:scale-105" loading="lazy">
                                 <div class="mt-5 space-y-2">
                                     <div class="flex justify-between items-baseline">
                                         <h3 class="text-lg font-bold text-white">Rovix Vintage Executive Wallet</h3>
@@ -335,13 +326,10 @@
                     <p class="text-gray-400 text-sm max-w-md">বাস্তব ভিডিওতে রোভিক্স প্রোডাক্টের চামড়ার টেক্সচার এবং ফিনিশিং সরাসরি দেখে নিশ্চিত হোন।</p>
                 </div>
 
-                <!-- Video Cards Slider/Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    
-                    <!-- Reel 1 -->
                     <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
                         <div class="aspect-[9/14] bg-leather-900 relative">
-                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
                             
                             <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
@@ -361,10 +349,9 @@
                         </div>
                     </div>
 
-                    <!-- Reel 2 -->
                     <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
                         <div class="aspect-[9/14] bg-leather-900 relative">
-                            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
                             
                             <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
@@ -384,10 +371,9 @@
                         </div>
                     </div>
 
-                    <!-- Reel 3 -->
                     <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
                         <div class="aspect-[9/14] bg-leather-900 relative">
-                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
                             
                             <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
@@ -407,10 +393,9 @@
                         </div>
                     </div>
 
-                    <!-- Reel 4 -->
                     <div class="relative rounded-2xl overflow-hidden bg-leather-800 border border-leather-700 shadow-xl group">
                         <div class="aspect-[9/14] bg-leather-900 relative">
-                            <img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                            <img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80" alt="Video Reel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-leather-900 via-transparent to-transparent"></div>
                             
                             <button onclick="playVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 m-auto w-12 h-12 rounded-full gold-gradient text-leather-900 flex items-center justify-center text-xl shadow-lg transform group-hover:scale-110 transition">
@@ -429,12 +414,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- Product Showcase Section (Dynamic from Supabase) -->
+        <!-- Product Showcase Section -->
         <section id="products-section" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row items-center justify-between border-b border-leather-200 pb-5 mb-8 gap-4">
                 <div>
@@ -442,7 +426,6 @@
                     <h2 class="text-2xl sm:text-3xl font-black text-leather-900">আমাদের প্রিমিয়াম কালেকশন</h2>
                 </div>
 
-                <!-- Product Filters -->
                 <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 hide-scrollbar">
                     <button onclick="filterCategory('all')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-leather-900 text-white shadow">সবগুলো</button>
                     <button onclick="filterCategory('short-wallet')" class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-leather-800 border border-leather-200 hover:bg-leather-100">শর্ট ওয়ালেট</button>
@@ -452,10 +435,7 @@
                 </div>
             </div>
 
-            <!-- Product Grid -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Populated via Supabase JS -->
-            </div>
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
         </section>
 
         <!-- Craftsmanship & Brand Guarantee Showcase -->
@@ -471,7 +451,6 @@
                             আমরা কৃত্রিম বা রেক্সিন লেদার সম্পূর্ণ বর্জন করি। রোভিক্সের প্রতিটি ওয়ালেট এবং জুতা ১০০% খাঁটি গরু ও ভেড়ার চামড়া কেটে সম্পূর্ণ হাতে সেলাই ও ফিনিশিং দেওয়া হয়। আমাদের লক্ষ্য একটাই— দীর্ঘস্থায়ী ও প্রিমিয়াম প্রোডাক্ট নিশ্চিত করা।
                         </p>
 
-                        <!-- Stats Grid -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-leather-800">
                             <div>
                                 <p class="text-3xl font-black text-gold-400">৭+</p>
@@ -493,8 +472,8 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Leather Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full">
-                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Shoe Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full mt-6">
+                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Leather Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" alt="Shoe Crafting" class="rounded-2xl shadow-lg border border-leather-700 h-48 sm:h-64 object-cover w-full mt-6" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -516,16 +495,12 @@
                     <p class="text-gray-600 text-xs sm:text-sm mt-1">আমাদের সম্মানিত কাস্টমারদের সত্য মন্তব্য ও ছবিসহ রিভিউ</p>
                 </div>
 
-                <!-- Reviews Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-leather-200/70 relative flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
-                                        রা
-                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">রা</div>
                                     <div>
                                         <h4 class="font-bold text-sm text-leather-900">রাশেদুল ইসলাম</h4>
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (ঢাকা)</p>
@@ -538,7 +513,7 @@
                             </p>
                         </div>
                         <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <img src="https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item" loading="lazy">
                             <span class="text-[11px] font-medium text-leather-800 truncate">Rovix Vintage Executive Wallet</span>
                         </div>
                     </div>
@@ -547,9 +522,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
-                                        তা
-                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">তা</div>
                                     <div>
                                         <h4 class="font-bold text-sm text-leather-900">তানভীর আহমেদ</h4>
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (চট্টগ্রাম)</p>
@@ -562,7 +535,7 @@
                             </p>
                         </div>
                         <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item" loading="lazy">
                             <span class="text-[11px] font-medium text-leather-800 truncate">Samson Chain Wallet Black</span>
                         </div>
                     </div>
@@ -571,9 +544,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">
-                                        মাহ
-                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-leather-800 text-gold-400 font-bold flex items-center justify-center">মাহ</div>
                                     <div>
                                         <h4 class="font-bold text-sm text-leather-900">মাহমুদুল হাসান</h4>
                                         <p class="text-[10px] text-green-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ভেরিফাইড বায়ার (সিলেট)</p>
@@ -586,16 +557,15 @@
                             </p>
                         </div>
                         <div class="border-t pt-3 border-leather-100 flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-md object-cover border" alt="Item" loading="lazy">
                             <span class="text-[11px] font-medium text-leather-800 truncate">Rovix Classic Formal Shoe</span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- International Press & Ticker Section -->
+        <!-- Ticker Section -->
         <section class="bg-leather-900 text-amber-200 py-6 overflow-hidden border-t border-b border-gold-500/20">
             <div class="max-w-7xl mx-auto px-4 text-center mb-3">
                 <span class="text-[11px] uppercase tracking-widest text-gold-400 font-bold">মিডিয়া ফোকাস ও আন্তর্জাতিক স্বীকৃতি</span>
@@ -621,8 +591,6 @@
 
         <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
             <div class="w-screen max-w-md bg-white text-leather-900 shadow-2xl flex flex-col justify-between">
-                
-                <!-- Drawer Header -->
                 <div class="p-5 bg-leather-900 text-white flex items-center justify-between border-b border-leather-800">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-bag-shopping text-gold-400 text-xl"></i>
@@ -633,12 +601,8 @@
                     </button>
                 </div>
 
-                <!-- Drawer Cart Items list -->
-                <div id="cartDrawerItems" class="flex-1 overflow-y-auto p-5 space-y-4">
-                    <!-- Populated by JS -->
-                </div>
+                <div id="cartDrawerItems" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
 
-                <!-- Drawer Footer & Summary -->
                 <div class="p-5 bg-leather-50 border-t border-leather-200 space-y-3">
                     <div class="flex justify-between text-sm font-medium">
                         <span class="text-gray-600">সাবটোটাল:</span>
@@ -676,8 +640,6 @@
             </div>
 
             <form id="checkoutForm" onsubmit="submitOrder(event)" class="p-5 sm:p-6 space-y-5">
-                
-                <!-- Delivery Details Form -->
                 <div class="space-y-4">
                     <h4 class="font-bold text-sm text-leather-900 border-b pb-2 border-leather-200 flex items-center gap-2">
                         <span class="w-5 h-5 rounded-full bg-gold-500 text-leather-900 font-extrabold text-xs flex items-center justify-center">১</span>
@@ -715,12 +677,9 @@
                     </div>
                 </div>
 
-                <!-- Order Summary Table -->
                 <div class="bg-leather-50 p-4 rounded-xl border border-leather-200/80 space-y-2">
                     <h4 class="font-bold text-xs uppercase tracking-wider text-leather-800 mb-2">অর্ডার সামারি</h4>
-                    <div id="checkoutSummaryItems" class="space-y-1.5 text-xs text-gray-700 max-h-32 overflow-y-auto">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div id="checkoutSummaryItems" class="space-y-1.5 text-xs text-gray-700 max-h-32 overflow-y-auto"></div>
                     <div class="border-t border-leather-200 pt-2 flex justify-between text-xs text-gray-600">
                         <span>পণ্যমূল্য:</span>
                         <span id="checkoutSubtotal">৳০</span>
@@ -735,7 +694,6 @@
                     </div>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-leather-900 font-extrabold py-4 rounded-xl shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2">
                     <i class="fa-solid fa-check-circle"></i>
                     <span>অর্ডার নিশ্চিত করুন (৳<span id="btnTotal">0</span>)</span>
@@ -750,9 +708,7 @@
             <button onclick="closeModal('quickViewModal')" class="absolute top-4 right-4 z-10 w-8 h-8 bg-leather-900/70 text-white rounded-full flex items-center justify-center hover:bg-leather-900">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="quickViewContent" class="p-6">
-                <!-- Dynamically Populated -->
-            </div>
+            <div id="quickViewContent" class="p-6"></div>
         </div>
     </div>
 
@@ -770,7 +726,7 @@
             </div>
             <div class="p-6 space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">অর্ডার আইকন বা ফোন নম্বর</label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">অর্ডার আইডি বা ফোন নম্বর</label>
                     <input type="text" id="trackInput" placeholder="ROVIX-10928 অথবা 017XXXXXXXX" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
                 </div>
                 <button onclick="simulateTracking()" class="w-full bg-gold-500 hover:bg-gold-400 text-leather-900 font-bold py-3 rounded-lg transition text-sm">
@@ -782,7 +738,6 @@
                         <p class="font-bold text-leather-900">অর্ডার নম্বর: #ROVIX-88291</p>
                         <p class="text-gray-600">গ্রাহক: মো: রফিকুল ইসলাম</p>
                     </div>
-                    <!-- Status Timeline -->
                     <div class="space-y-3 relative pl-6 border-l-2 border-gold-500 text-xs">
                         <div class="relative">
                             <span class="absolute -left-[31px] top-0 w-4 h-4 bg-gold-500 rounded-full border-2 border-white"></span>
@@ -797,7 +752,7 @@
                         <div class="relative">
                             <span class="absolute -left-[31px] top-0 w-4 h-4 bg-gold-500 rounded-full border-2 border-white animate-ping"></span>
                             <p class="font-bold text-green-600">কুরিয়ারে হস্তান্তর করা হয়েছে (On the way)</p>
-                            <p class="text-[10px] text-gray-500">আজ, দুপুর ১২:০০ (Steadfast Courier)</p>
+                            <p class="text-[10px] text-gray-500">আজ, দুপুর ১২:০০</p>
                         </div>
                     </div>
                 </div>
@@ -849,8 +804,6 @@
     <footer class="bg-leather-900 text-white border-t border-leather-800 pt-12 pb-20 sm:pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-leather-800">
-                
-                <!-- Col 1 -->
                 <div class="space-y-4">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 rounded gold-gradient flex items-center justify-center text-leather-900 font-extrabold text-lg">R</div>
@@ -860,13 +813,12 @@
                         শতভাগ খাঁটি চামড়ার নিশ্চয়তায় প্রিমিয়াম ডিজাইনের ওয়ালেট, বেল্ট ও জুতা তৈরির বিশ্বস্ত ব্র্যান্ড।
                     </p>
                     <div class="flex gap-3 text-gold-400">
-                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+                        <a id="footerFacebook" href="#" target="_blank" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a id="footerInstagram" href="#" target="_blank" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a id="footerYoutube" href="#" target="_blank" class="w-8 h-8 rounded-full bg-leather-800 hover:bg-gold-500 hover:text-leather-900 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Col 2 -->
                 <div>
                     <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">দ্রুত লিংক</h4>
                     <ul class="space-y-2 text-xs text-gray-300">
@@ -878,7 +830,6 @@
                     </ul>
                 </div>
 
-                <!-- Col 3 -->
                 <div>
                     <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">নীতিমালা</h4>
                     <ul class="space-y-2 text-xs text-gray-300">
@@ -889,16 +840,14 @@
                     </ul>
                 </div>
 
-                <!-- Col 4 -->
                 <div>
                     <h4 class="font-bold text-sm text-gold-400 mb-4 uppercase tracking-wider">যোগাযোগ করুন</h4>
                     <div class="space-y-3 text-xs text-gray-300">
                         <p><i class="fa-solid fa-location-dot text-gold-500 mr-2"></i>৩৬ জিগাতলা, ধানমণ্ডি, ঢাকা-১২০৯</p>
-                        <p><i class="fa-solid fa-phone text-gold-500 mr-2"></i>+880 1700-000000 (সকাল ৯টা - রাত ১০টা)</p>
+                        <p><a id="footerPhone" href="tel:+8801700000000" class="hover:text-gold-400"><i class="fa-solid fa-phone text-gold-500 mr-2"></i>+880 1700-000000</a></p>
                         <p><i class="fa-solid fa-envelope text-gold-500 mr-2"></i>support@rovix.com</p>
                     </div>
                 </div>
-
             </div>
 
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
@@ -912,7 +861,7 @@
         </div>
     </footer>
 
-    <!-- Sticky Floating Mobile Quick Actions Button -->
+    <!-- Fixed Floating WhatsApp Quick Action Button (Fixed & Working) -->
     <div class="fixed bottom-4 right-4 z-40 sm:hidden flex flex-col gap-2">
         <a id="whatsappBtn" href="https://wa.me/8801700000000" target="_blank" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-2xl shadow-2xl border-2 border-white">
             <i class="fa-brands fa-whatsapp"></i>
@@ -926,7 +875,6 @@
         let cart = [];
         let storeSettings = {};
 
-        // App Initialization
         window.onload = async function() {
             products = await fetchProductsFromDB();
             storeSettings = await fetchSettingsFromDB();
@@ -935,7 +883,7 @@
             updateCartUI();
         };
 
-        // Apply Dynamic Settings from DB
+        // Apply Dynamic Settings & Links from Admin/DB
         function applySettings() {
             if(storeSettings.brand_name) {
                 document.getElementById('brandName').innerHTML = storeSettings.brand_name.replace('™', '<span class="text-gold-500">™</span>');
@@ -946,13 +894,25 @@
             if(storeSettings.phone) {
                 document.getElementById('headerPhone').innerHTML = `<i class="fa-solid fa-phone mr-1"></i> ${storeSettings.phone}`;
                 document.getElementById('headerPhone').href = `tel:${storeSettings.phone}`;
+                document.getElementById('footerPhone').innerHTML = `<i class="fa-solid fa-phone text-gold-500 mr-2"></i>${storeSettings.phone}`;
+                document.getElementById('footerPhone').href = `tel:${storeSettings.phone}`;
             }
             if(storeSettings.whatsapp) {
-                document.getElementById('whatsappBtn').href = `https://wa.me/${storeSettings.whatsapp}`;
+                // Ensures WhatsApp number formats correctly for chat URL
+                let cleanWa = storeSettings.whatsapp.replace(/[^0-9]/g, '');
+                document.getElementById('whatsappBtn').href = `https://wa.me/${cleanWa}`;
+            }
+            if(storeSettings.facebook) {
+                document.getElementById('footerFacebook').href = storeSettings.facebook;
+            }
+            if(storeSettings.instagram) {
+                document.getElementById('footerInstagram').href = storeSettings.instagram;
+            }
+            if(storeSettings.youtube) {
+                document.getElementById('footerYoutube').href = storeSettings.youtube;
             }
         }
 
-        // Render Product Grid
         function renderProducts(items) {
             const grid = document.getElementById('productGrid');
             if(items.length === 0) {
@@ -965,7 +925,7 @@
                     <div class="relative overflow-hidden bg-leather-50">
                         ${p.badge ? `<span class="absolute top-3 left-3 z-10 bg-leather-900 text-gold-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-gold-500/30">${p.badge}</span>` : ''}
                         
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500" loading="lazy">
                         
                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
                             <button onclick="openQuickView(${p.id})" class="w-10 h-10 rounded-full bg-white text-leather-900 hover:bg-gold-500 transition flex items-center justify-center shadow-lg" title="Quick View">
@@ -1006,7 +966,6 @@
             `).join('');
         }
 
-        // Category Filter Handling
         function filterCategory(cat) {
             if (cat === 'all') {
                 renderProducts(products);
@@ -1016,7 +975,6 @@
             }
         }
 
-        // Search Bar Functionality
         function handleSearch(query) {
             const dropdown = document.getElementById('searchDropdown');
             if(!query.trim()) {
@@ -1028,7 +986,7 @@
             if(results.length > 0) {
                 dropdown.innerHTML = results.map(p => `
                     <div onclick="openQuickView(${p.id})" class="flex items-center gap-3 p-2 hover:bg-leather-800 rounded-lg cursor-pointer text-white">
-                        <img src="${p.image}" class="w-10 h-10 object-cover rounded">
+                        <img src="${p.image}" class="w-10 h-10 object-cover rounded" loading="lazy">
                         <div class="text-xs">
                             <p class="font-bold">${p.name}</p>
                             <p class="text-gold-400 font-extrabold">৳${p.price}</p>
@@ -1042,7 +1000,6 @@
             }
         }
 
-        // Cart State Logic
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const exist = cart.find(item => item.id === productId);
@@ -1085,7 +1042,7 @@
             } else {
                 cartDrawerItems.innerHTML = cart.map(item => `
                     <div class="flex items-center gap-3 bg-leather-50 p-3 rounded-xl border border-leather-200">
-                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg border">
+                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg border" loading="lazy">
                         <div class="flex-1">
                             <h4 class="text-xs font-bold text-leather-900 line-clamp-1">${item.name}</h4>
                             <p class="text-xs text-gold-600 font-extrabold mt-0.5">৳${item.price} x ${item.qty}</p>
@@ -1107,11 +1064,9 @@
         }
 
         function toggleCartDrawer() {
-            const drawer = document.getElementById('cartDrawer');
-            drawer.classList.toggle('hidden');
+            document.getElementById('cartDrawer').classList.toggle('hidden');
         }
 
-        // Direct One-Click Checkout
         function directCheckout(productId) {
             cart = [];
             const p = products.find(item => item.id === productId);
@@ -1148,7 +1103,6 @@
             document.getElementById('btnTotal').innerText = grandTotal.toLocaleString();
         }
 
-        // Real Order Submission to Supabase
         async function submitOrder(e) {
             e.preventDefault();
             const name = document.getElementById('custName').value;
@@ -1161,7 +1115,6 @@
             const orderId = "ROVIX-" + Math.floor(100000 + Math.random() * 900000);
 
             try {
-                // 1. Insert Order into Supabase
                 const { error: ordErr } = await supabaseClient.from('orders').insert([{
                     order_id: orderId,
                     customer_name: name,
@@ -1174,7 +1127,6 @@
                 }]);
                 if(ordErr) throw ordErr;
 
-                // 2. Insert Order Items & Deduct Stock
                 for(let item of cart) {
                     await supabaseClient.from('order_items').insert([{
                         order_id: orderId,
@@ -1203,13 +1155,12 @@
             }
         }
 
-        // Quick View Modal Popup
         function openQuickView(id) {
             const p = products.find(item => item.id === id);
             const content = document.getElementById('quickViewContent');
             content.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <img src="${p.image}" class="w-full h-72 object-cover rounded-xl border">
+                    <img src="${p.image}" class="w-full h-72 object-cover rounded-xl border" loading="lazy">
                     <div class="space-y-4">
                         <span class="bg-leather-900 text-gold-400 text-xs font-bold px-2.5 py-1 rounded">${p.badge || 'ROVIX'}</span>
                         <h2 class="text-xl font-bold text-leather-900">${p.name}</h2>
@@ -1233,7 +1184,6 @@
             openModal('quickViewModal');
         }
 
-        // Order Tracking Simulation
         function simulateTracking() {
             const val = document.getElementById('trackInput').value;
             if(!val) {
@@ -1243,13 +1193,11 @@
             document.getElementById('trackingResult').classList.remove('hidden');
         }
 
-        // Video Player Modal
         function playVideoModal(url) {
             document.getElementById('videoIframe').src = url;
             openModal('videoModal');
         }
 
-        // Generic Modal Helpers
         function openModal(id) {
             document.getElementById(id).classList.remove('hidden');
         }
@@ -1260,7 +1208,6 @@
             }
         }
 
-        // Toast Notification Helper
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
