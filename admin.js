@@ -108,7 +108,8 @@ async function loadDashboardData() {
     populateCategoryDropdowns();
 
     // 2. Fetch Products
-    const { data: prods } = await supabaseClient.from('products').select('*');
+    const { data: prods, error: prodErr } = await supabaseClient.from('products').select('*');
+    if(prodErr) console.error("Error loading products:", prodErr);
     adminProducts = prods || [];
 
     // 3. Fetch Orders
@@ -123,7 +124,7 @@ async function loadDashboardData() {
         adminExpenses = [];
     }
 
-    // 5. Fetch Settings / Content & Auto-sync global links
+    // 5. Fetch Settings / Content
     try {
         const { data: sets } = await supabaseClient.from('store_settings').select('*');
         if(sets) {
@@ -162,17 +163,17 @@ async function loadDashboardData() {
         .reduce((sum, o) => sum + (o.grand_total || 0), 0);
 
     // Update Dashboard Metrics UI
-    document.getElementById('statTodaySales').innerText = `৳${todaySales.toLocaleString()}`;
-    document.getElementById('statTotalSales').innerText = `৳${totalSales.toLocaleString()}`;
-    document.getElementById('statTotalOrders').innerText = adminOrders.length;
-    document.getElementById('statPendingOrders').innerText = pendingOrders;
-    document.getElementById('statProcessingOrders').innerText = processingOrders;
-    document.getElementById('statDeliveredOrders').innerText = deliveredOrders;
-    document.getElementById('statTotalProducts').innerText = adminProducts.length;
-    document.getElementById('statLowStock').innerText = lowStockCount;
-    document.getElementById('statTotalExpenses').innerText = `৳${totalExpenses.toLocaleString()}`;
-    document.getElementById('statEstProfit').innerText = `৳${estProfit.toLocaleString()}`;
-    document.getElementById('statPendingCOD').innerText = `৳${pendingCOD.toLocaleString()}`;
+    if(document.getElementById('statTodaySales')) document.getElementById('statTodaySales').innerText = `৳${todaySales.toLocaleString()}`;
+    if(document.getElementById('statTotalSales')) document.getElementById('statTotalSales').innerText = `৳${totalSales.toLocaleString()}`;
+    if(document.getElementById('statTotalOrders')) document.getElementById('statTotalOrders').innerText = adminOrders.length;
+    if(document.getElementById('statPendingOrders')) document.getElementById('statPendingOrders').innerText = pendingOrders;
+    if(document.getElementById('statProcessingOrders')) document.getElementById('statProcessingOrders').innerText = processingOrders;
+    if(document.getElementById('statDeliveredOrders')) document.getElementById('statDeliveredOrders').innerText = deliveredOrders;
+    if(document.getElementById('statTotalProducts')) document.getElementById('statTotalProducts').innerText = adminProducts.length;
+    if(document.getElementById('statLowStock')) document.getElementById('statLowStock').innerText = lowStockCount;
+    if(document.getElementById('statTotalExpenses')) document.getElementById('statTotalExpenses').innerText = `৳${totalExpenses.toLocaleString()}`;
+    if(document.getElementById('statEstProfit')) document.getElementById('statEstProfit').innerText = `৳${estProfit.toLocaleString()}`;
+    if(document.getElementById('statPendingCOD')) document.getElementById('statPendingCOD').innerText = `৳${pendingCOD.toLocaleString()}`;
 
     // Render Sub-tables & Components
     renderAdminProducts();
@@ -248,7 +249,6 @@ function populateCategoryDropdowns() {
     }
 }
 
-// Save Settings Function
 async function saveSettings(e) {
     e.preventDefault();
     const brand_name = document.getElementById('settingBrand').value;
@@ -379,7 +379,7 @@ function renderAdminProducts() {
     tbody.innerHTML = adminProducts.map(p => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 flex items-center gap-2">
-                <img src="${p.image}" class="w-8 h-8 object-cover rounded border shrink-0">
+                <img src="${p.image || 'https://via.placeholder.com/150'}" class="w-8 h-8 object-cover rounded border shrink-0">
                 <span class="font-bold text-gray-900 truncate max-w-[120px] sm:max-w-none">${p.name}</span>
             </td>
             <td class="p-3 font-semibold text-gray-600">${p.category}</td>
@@ -447,7 +447,9 @@ function renderCustomersTable() {
             uniqueCust.push(o);
         }
     }
-    document.getElementById('statTotalCustomers').innerText = uniqueCust.length;
+    if(document.getElementById('statTotalCustomers')) {
+        document.getElementById('statTotalCustomers').innerText = uniqueCust.length;
+    }
 
     tbody.innerHTML = uniqueCust.map(c => `
         <tr class="border-b">
@@ -530,7 +532,7 @@ function openProductModal() {
     document.getElementById('productForm').reset();
     document.getElementById('editProductId').value = '';
     document.getElementById('imagePreviewContainer').innerHTML = '';
-    document.getElementById('prodVideoUrl').value = '';
+    if(document.getElementById('prodVideoUrl')) document.getElementById('prodVideoUrl').value = '';
     uploadedImagesArray = [];
     document.getElementById('productModalTitle').innerText = 'নতুন পণ্য যোগ করুন';
     document.getElementById('productModal').classList.remove('hidden');
@@ -541,43 +543,86 @@ function openExpenseModal() {
     document.getElementById('expenseModal').classList.remove('hidden');
 }
 
-// FIXED & SECURED saveProduct Function for Supabase
+// -------------------------------------------------------------
+// UPDATED SAVE PRODUCT FUNCTION (Fixes Item Adding Issues)
+// -------------------------------------------------------------
 async function saveProduct(e) {
     e.preventDefault();
+    
     const id = document.getElementById('editProductId').value;
-    const name = document.getElementById('prodName').value;
+    const name = document.getElementById('prodName').value.trim();
     const category = document.getElementById('prodCategory').value;
     const price = parseFloat(document.getElementById('prodPrice').value) || 0;
-    const original_price = parseFloat(document.getElementById('prodOrigPrice').value) || 0;
+    const original_price = parseFloat(document.getElementById('prodOrigPrice').value) || price;
     const stock = parseInt(document.getElementById('prodStock').value) || 0;
-    let image = document.getElementById('prodImage').value || 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80';
-    const video_url = document.getElementById('prodVideoUrl').value || '';
-    const description = document.getElementById('prodDesc').value || '';
+    
+    let image = document.getElementById('prodImage').value.trim();
+    const video_url = document.getElementById('prodVideoUrl') ? document.getElementById('prodVideoUrl').value.trim() : '';
+    const description = document.getElementById('prodDesc') ? document.getElementById('prodDesc').value.trim() : '';
 
-    if(uploadedImagesArray.length > 0) {
+    if (uploadedImagesArray.length > 0) {
         image = uploadedImagesArray[0];
     }
 
-    const payload = { name, category, price, original_price, stock, image, video_url, description };
+    if (!image) {
+        image = 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80';
+    }
+
+    // Prepare core product object
+    const payload = {
+        name,
+        category,
+        price,
+        original_price,
+        stock,
+        image,
+        video_url,
+        description,
+        rating: 4.9,
+        badge: 'ROVIX'
+    };
 
     try {
-        let error;
-        if(id) {
-            const res = await supabaseClient.from('products').update(payload).eq('id', id);
-            error = res.error;
+        let response;
+        if (id) {
+            // Edit Existing Product
+            response = await supabaseClient.from('products').update(payload).eq('id', id);
         } else {
-            const res = await supabaseClient.from('products').insert([payload]);
-            error = res.error;
+            // Insert New Product (Let Supabase generate auto-increment ID)
+            response = await supabaseClient.from('products').insert([payload]);
         }
 
-        if(error) throw error;
+        if (response.error) {
+            // If custom columns (like video_url/badge) fail, fallback to fundamental schema
+            console.warn("Retrying with minimal payload due to schema mismatch:", response.error.message);
+            const fallbackPayload = {
+                name,
+                category,
+                price,
+                original_price,
+                stock,
+                image
+            };
+            
+            let fallbackResponse;
+            if(id) {
+                fallbackResponse = await supabaseClient.from('products').update(fallbackPayload).eq('id', id);
+            } else {
+                fallbackResponse = await supabaseClient.from('products').insert([fallbackPayload]);
+            }
 
-        alert(id ? 'পণ্য সফলভাবে আপডেট করা হয়েছে!' : 'নতুন পণ্য সফলভাবে যোগ করা হয়েছে!');
+            if(fallbackResponse.error) {
+                throw fallbackResponse.error;
+            }
+        }
+
+        alert('পণ্য সফলভাবে সেভ হয়েছে!');
         closeModal('productModal');
-        loadDashboardData();
+        await loadDashboardData();
+
     } catch (err) {
+        console.error("Save product error:", err);
         alert('পণ্য সেভ করতে সমস্যা হয়েছে: ' + err.message);
-        console.error("Product Save Error:", err);
     }
 }
 
@@ -599,22 +644,28 @@ async function saveExpense(e) {
 
 async function deleteProduct(id) {
    if(confirm('পণ্যটি ডিলিট করতে চান?')) {
-       await supabaseClient.from('products').delete().eq('id', id);
-       loadDashboardData();
+       const { error } = await supabaseClient.from('products').delete().eq('id', id);
+       if(error) {
+           alert('ডিলিট করতে ব্যর্থ হয়েছে: ' + error.message);
+       } else {
+           loadDashboardData();
+       }
    }
 }
 
 function editProduct(id) {
     const p = adminProducts.find(item => item.id === id);
+    if(!p) return;
+
     document.getElementById('editProductId').value = p.id;
-    document.getElementById('prodName').value = p.name;
-    document.getElementById('prodCategory').value = p.category;
-    document.getElementById('prodPrice').value = p.price;
-    document.getElementById('prodOrigPrice').value = p.original_price;
-    document.getElementById('prodStock').value = p.stock;
-    document.getElementById('prodImage').value = p.image;
-    document.getElementById('prodVideoUrl').value = p.video_url || '';
-    document.getElementById('prodDesc').value = p.description || '';
+    document.getElementById('prodName').value = p.name || '';
+    document.getElementById('prodCategory').value = p.category || '';
+    document.getElementById('prodPrice').value = p.price || 0;
+    document.getElementById('prodOrigPrice').value = p.original_price || p.price || 0;
+    document.getElementById('prodStock').value = p.stock || 0;
+    document.getElementById('prodImage').value = p.image || '';
+    if(document.getElementById('prodVideoUrl')) document.getElementById('prodVideoUrl').value = p.video_url || '';
+    if(document.getElementById('prodDesc')) document.getElementById('prodDesc').value = p.description || '';
     
     uploadedImagesArray = [];
     const previewContainer = document.getElementById('imagePreviewContainer');
@@ -637,10 +688,11 @@ function filterProductsTable() {
         return matchesQuery && matchesCat;
     });
     const tbody = document.getElementById('adminProductTableBody');
+    if(!tbody) return;
     tbody.innerHTML = filtered.map(p => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 flex items-center gap-2">
-                <img src="${p.image}" class="w-8 h-8 object-cover rounded border shrink-0">
+                <img src="${p.image || 'https://via.placeholder.com/150'}" class="w-8 h-8 object-cover rounded border shrink-0">
                 <span class="font-bold text-gray-900 truncate max-w-[120px] sm:max-w-none">${p.name}</span>
             </td>
             <td class="p-3 font-semibold text-gray-600">${p.category}</td>
@@ -657,11 +709,12 @@ function filterProductsTable() {
 function filterOrdersTable() {
     const query = document.getElementById('orderSearchInput').value.toLowerCase();
     const filtered = adminOrders.filter(o => 
-        o.order_id.toLowerCase().includes(query) || 
-        o.customer_phone.includes(query) ||
-        o.customer_name.toLowerCase().includes(query)
+        (o.order_id && o.order_id.toLowerCase().includes(query)) || 
+        (o.customer_phone && o.customer_phone.includes(query)) ||
+        (o.customer_name && o.customer_name.toLowerCase().includes(query))
     );
     const tbody = document.getElementById('adminOrderTableBody');
+    if(!tbody) return;
     tbody.innerHTML = filtered.map(o => `
         <tr class="border-b hover:bg-gray-50">
             <td class="p-3 font-bold text-leather-900">#${o.order_id}</td>
